@@ -105,12 +105,26 @@
     background-color: #3b5998;
 }
 
+.form-visual{
+    background: #18181f;
+    border: 1px solid #b5333a;
+    border-radius: 6px;
+}
+
+.h5-red, .label-red, .p-red{
+    color: #b5333a;
+}
+
 .login-form {
     margin-top: 20%;
 }
 
 .register-form {
     margin-top: 15%;
+}
+
+.login-form > label, .register-form > label {
+    margin-bottom: 0px !important;
 }
 
 @media (min-width: 1366px) { 
@@ -120,4 +134,13 @@
     .register-form {
         margin-top: 5%;
     }
+}
+
+.field-password{
+    width: 75% !important;
+}
+
+.btn-login{
+    margin-left: 10px;
+    width: 22%;
 }
