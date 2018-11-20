@@ -14,11 +14,11 @@
                         </div>
                         <div class="form-group">
                             <label for="email">Endereço de e-mail</label>
-                            <input type="email" class="form-control" id="loginEmail" placeholder="Seu e-mail" required autofocus>
+                            <input type="email" name="email" class="form-control" id="loginEmail" placeholder="Seu e-mail" required autofocus>
                         </div>
                         <div class="form-group">
                             <label for="password">Senha</label>
-                            <input type="password" class="form-control" id="loginPassword" placeholder="Sua senha" required>
+                            <input type="password" name="password" class="form-control" id="loginPassword" placeholder="Sua senha" required>
                         </div>
                         <div>
                             <button onclick="login()" class="btn btn-default btn-primary btn-block text-uppercase" type="button">Login</button>
@@ -65,24 +65,19 @@
                     }
                 }
 
-                //if (response.error) {
-                //    self.errors.push(response.error);
-                //}
+                if (response.error) {
+                    self.errors.push(response.error);
+                }
 
-                //if (response.error_description) {
-                //    console.log("Aqui tb");
-                //    self.errors.push(response.error_description);
-                //}
+                if (response.error_description) {
+                    console.log("Aqui tb");
+                    self.errors.push(response.error_description);
+                }
             }
         }
 
 
         function login() {
-            var baseUrl =
-                window.location.protocol +
-                "//" +
-                window.location.hostname +
-                (window.location.port ? ':' + window.location.port : '');
             var loginData = {
                 grant_type: 'password',
                 username: document.getElementById("loginEmail").value,

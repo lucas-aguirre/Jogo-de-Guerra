@@ -104,3 +104,20 @@
     color: white;
     background-color: #3b5998;
 }
+
+.login-form {
+    margin-top: 20%;
+}
+
+.register-form {
+    margin-top: 15%;
+}
+
+@media (min-width: 1366px) { 
+    .login-form {
+        margin-top: 10%;
+    }
+    .register-form {
+        margin-top: 5%;
+    }
+}

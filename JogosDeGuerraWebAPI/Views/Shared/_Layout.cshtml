@@ -37,6 +37,13 @@
             @RenderBody()
         </div>
     </div>
+    <script>
+        var baseUrl =
+                window.location.protocol +
+                "//" +
+                window.location.hostname +
+                (window.location.port ? ':' + window.location.port : '');
+    </script>
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
     @RenderSection("scripts", required: false)
