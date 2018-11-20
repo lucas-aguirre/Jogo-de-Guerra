@@ -6,21 +6,21 @@ using System.Threading.Tasks;
 
 namespace JogosDeGuerraModel
 {
-    class FactoryExercitoIndiano : AbstractFactoryExercito
+    class FactoryExercitoEgipcio : AbstractFactoryExercito
     {
         public override Arqueiro CriarArqueiro()
         {
-            return new ArqueiroIndiano();
+            return new ArqueiroEgipcio();
         }
 
         public override Cavaleiro CriarCavalaria()
         {
-            return new CavaleiroIndiano();
+            return new CavaleiroEgipcio();
         }
 
         public override Guerreiro CriarGuerreiro()
         {
-            return new GuerreiroIndiano();
+            return new GuerreiroEgipcio();
         }
     }
 }

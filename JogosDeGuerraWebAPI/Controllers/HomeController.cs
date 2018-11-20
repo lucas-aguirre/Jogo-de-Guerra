@@ -16,10 +16,10 @@ namespace JogosDeGuerraWebAPI.Controllers
                     new JogosDeGuerraModel.ModelJogosDeGuerra()
                     ) != null;
 
-            if (!usuarioAutenticado)
-            {
-                return RedirectToAction("Login");
-            }
+            //if (!usuarioAutenticado)
+            //{
+            //    return RedirectToAction("Login");
+            //}
 
             return View();
         }
@@ -31,8 +31,9 @@ namespace JogosDeGuerraWebAPI.Controllers
             return View();
         }
 
-        public ActionResult Login(string usuario, string password, string rememberme, string returnurl)
+        public ActionResult Login()
         {
+            ViewBag.Title = "Login";
             /*
             ViewBag.Title = "Login";
             var user = busUser.ValidateUserAndLoad(email, password);
@@ -57,6 +58,13 @@ namespace JogosDeGuerraWebAPI.Controllers
 
             return RedirectToAction("New", "Snippet", null);
             */
+            return View();
+        }
+
+        public ActionResult Cadastro()
+        {
+            ViewBag.Title = "Cadastro";
+
             return View();
         }
 
