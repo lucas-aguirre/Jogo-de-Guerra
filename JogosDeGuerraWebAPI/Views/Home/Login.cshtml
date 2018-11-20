@@ -105,6 +105,7 @@
                 });
                 sessionStorage.setItem('accessToken', data.token_type + " " + data.access_token);
                 sessionStorage.setItem('emailUsuario', data.userName);
+                window.location.href = baseUrl + "/Account/Index";
             }).fail(showError);
         }
     </script>
