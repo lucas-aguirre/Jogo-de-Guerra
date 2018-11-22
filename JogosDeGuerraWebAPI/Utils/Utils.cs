@@ -26,5 +26,16 @@ namespace JogosDeGuerraWebAPI.Utils
             }
             return null;
         }
+
+        public static bool ObterLogado()
+        {
+            var ident = System.Web.HttpContext.Current.User.Identity;
+            if (System.Web.HttpContext.Current.User.Identity.IsAuthenticated)
+            {
+                return true;
+            }
+            return false;
+        }
+
     }
 }

@@ -11,8 +11,11 @@
 
         <p style="color:#fff">
             @Html.ActionLink("Criar Nova Batalha como Indía", "Create", new { id = 1 })
+            @Html.Label(" | ")
             @Html.ActionLink("Criar Nova Batalha como Persia", "Create", new { id = 2 })
+            @Html.Label(" | ")
             @Html.ActionLink("Criar Nova Batalha como Egito", "Create", new { id = 3 })
+            @Html.Label(" | ")
             @Html.ActionLink("Criar Nova Batalha como Asteca", "Create", new { id = 4 })
         </p>
         <table style="color:#fff" class="table">
@@ -39,12 +42,21 @@
             {
                 <tr>
                     <td style="color:#fff">
-                        @Html.DisplayFor(modelItem => item.ExercitoBranco.Usuario.Email) |
+                        @Html.DisplayFor(modelItem => item.ExercitoBranco.Usuario.Email)
+                        @Html.Label(" | ")
                         @Html.DisplayFor(modelItem => item.ExercitoBranco.Nacao)
                     </td>
                     <td style="color:#fff">
-                        @Html.DisplayFor(modelItem => item.ExercitoPreto.Usuario.Email) |
+                        @if (item.ExercitoPreto == null)
+                        {
+                            @Html.Label("-");
+                        }
+                        else
+                        {
+                        @Html.DisplayFor(modelItem => item.ExercitoPreto.Usuario.Email)
+                        @Html.Label(" | ")
                         @Html.DisplayFor(modelItem => item.ExercitoPreto.Nacao)
+                        }
                     </td>
                     <td style="color:#fff">
                         @if (item.Turno == null)
