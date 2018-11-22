@@ -101,11 +101,14 @@
                 url: baseUrl + '/api/Account/Register',
                 data: loginData
             }).done(function (data) {
-                $.confirm({
-                    title: 'Sucesso',
-                    content: 'Usuário registrado com sucesso',
-                    theme: 'modern',
-                });
+                //$.confirm({
+                //    title: 'Sucesso',
+                //    content: 'Usuário registrado com sucesso',
+                //    theme: 'modern',
+                //});
+                sessionStorage.setItem('accessToken', data.token_type + " " + data.access_token);
+                sessionStorage.setItem('emailUsuario', data.userName);
+                window.location.href = baseUrl + "/BatalhasMVC/Index";
             }).fail(showError);
         }
 
