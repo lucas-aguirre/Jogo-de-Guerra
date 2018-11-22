@@ -28,7 +28,6 @@ namespace JogosDeGuerraModel
 
         public virtual DbSet<Exercito> Exercitos { get; set; }
 
-
         public virtual DbSet<Batalha> Batalhas { get; set; }
 
         public virtual DbSet<Usuario> Usuarios { get; set; }
