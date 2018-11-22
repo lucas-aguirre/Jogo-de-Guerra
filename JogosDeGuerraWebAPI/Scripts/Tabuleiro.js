@@ -16,7 +16,7 @@ $(function () {
     var pecaElem = null;
     var elementos = null;
     //1 CriarNovaBatalha, 2 RetomarBatalha
-    var urlIniciarBatalha = baseUrl + "/api/Batalhas/Iniciar?Id=2";
+    var urlIniciarBatalha = baseUrl + "/api/Batalhas/Iniciar?Id=1";
 
     var token = sessionStorage.getItem("accessToken");
     var headers = {};
