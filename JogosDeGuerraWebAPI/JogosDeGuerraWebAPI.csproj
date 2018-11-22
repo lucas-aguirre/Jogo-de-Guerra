@@ -330,6 +330,7 @@
     <Content Include="Views\BatalhasMVC\Details.cshtml" />
     <Content Include="Views\BatalhasMVC\Edit.cshtml" />
     <Content Include="Views\BatalhasMVC\Index.cshtml" />
+    <Content Include="Views\BatalhasMVC\Lobby.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

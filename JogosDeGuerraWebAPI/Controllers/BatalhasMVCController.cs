@@ -28,6 +28,7 @@ namespace JogosDeGuerraWebAPI.Controllers
                 .Include(b => b.Vencedor)
                 .Include(b => b.Vencedor.Usuario)
                 .ToList();
+
             return View(batalhas);
         }
 
@@ -47,46 +48,44 @@ namespace JogosDeGuerraWebAPI.Controllers
         }
 
 
-        //public ActionResult Iniciar(int id)
-        //{
-        //    var batalhaController = new BatalhasController();
-        //    var batalha = batalhaController.IniciarBatalha(id);
-        //    //return 
-        //}
+        public ActionResult Iniciar(int id)
+        {
+            var batalhaController = new BatalhasController();
+            var batalha = batalhaController.IniciarBatalha(id);
+            return RedirectToAction("Tabuleiro");
+        }
 
 
         // GET: BatalhasMVC/Create
-        public ActionResult Create()
+        public ActionResult Create(int id)
         {
-            ViewBag.ExercitoBrancoId = new SelectList(db.Exercitos, "Id", "Id");
-            ViewBag.ExercitoPretoId = new SelectList(db.Exercitos, "Id", "Id");
-            ViewBag.TabuleiroId = new SelectList(db.Tabuleiroes, "Id", "Id");
-            ViewBag.TurnoId = new SelectList(db.Exercitos, "Id", "Id");
-            ViewBag.VencedorId = new SelectList(db.Exercitos, "Id", "Id");
-            return View();
+            AbstractFactoryExercito.Nacao nacao = (AbstractFactoryExercito.Nacao)id;
+            var batalhaController = new BatalhasController();
+            var batalha = batalhaController.CriarNovaBatalha(nacao);
+            return RedirectToAction("Lobby");
         }
 
-        // POST: BatalhasMVC/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,TabuleiroId,ExercitoBrancoId,ExercitoPretoId,VencedorId,TurnoId,Estado")] Batalha batalha)
-        {
-            if (ModelState.IsValid)
-            {
-                db.Batalhas.Add(batalha);
-                db.SaveChanges();
-                return RedirectToAction("Index");
-            }
+        //// POST: BatalhasMVC/Create
+        //// To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        //// more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        //[HttpPost]
+        //[ValidateAntiForgeryToken]
+        //public ActionResult Create([Bind(Include = "Id,TabuleiroId,ExercitoBrancoId,ExercitoPretoId,VencedorId,TurnoId,Estado")] Batalha batalha)
+        //{
+        //    if (ModelState.IsValid)
+        //    {
+        //        db.Batalhas.Add(batalha);
+        //        db.SaveChanges();
+        //        return RedirectToAction("Index");
+        //    }
 
-            ViewBag.ExercitoBrancoId = new SelectList(db.Exercitos, "Id", "Id", batalha.ExercitoBrancoId);
-            ViewBag.ExercitoPretoId = new SelectList(db.Exercitos, "Id", "Id", batalha.ExercitoPretoId);
-            ViewBag.TabuleiroId = new SelectList(db.Tabuleiroes, "Id", "Id", batalha.TabuleiroId);
-            ViewBag.TurnoId = new SelectList(db.Exercitos, "Id", "Id", batalha.TurnoId);
-            ViewBag.VencedorId = new SelectList(db.Exercitos, "Id", "Id", batalha.VencedorId);
-            return View(batalha);
-        }
+        //    ViewBag.ExercitoBrancoId = new SelectList(db.Exercitos, "Id", "Id", batalha.ExercitoBrancoId);
+        //    ViewBag.ExercitoPretoId = new SelectList(db.Exercitos, "Id", "Id", batalha.ExercitoPretoId);
+        //    ViewBag.TabuleiroId = new SelectList(db.Tabuleiroes, "Id", "Id", batalha.TabuleiroId);
+        //    ViewBag.TurnoId = new SelectList(db.Exercitos, "Id", "Id", batalha.TurnoId);
+        //    ViewBag.VencedorId = new SelectList(db.Exercitos, "Id", "Id", batalha.VencedorId);
+        //    return View(batalha);
+        //}
 
         // GET: BatalhasMVC/Edit/5
         public ActionResult Edit(int? id)

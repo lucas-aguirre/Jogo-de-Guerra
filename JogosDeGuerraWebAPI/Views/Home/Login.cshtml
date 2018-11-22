@@ -97,11 +97,11 @@
                 url: baseUrl + '/Token',
                 data: loginData
             }).done(function (data) {
-                $.alert({
-                    title: '',
-                    content: 'Login feito com Sucesso',
-                    theme: 'modern',
-                });
+                //$.alert({
+                //    title: '',
+                //    content: 'Login feito com Sucesso',
+                //    theme: 'modern',
+                //});
                 sessionStorage.setItem('accessToken', data.token_type + " " + data.access_token);
                 sessionStorage.setItem('emailUsuario', data.userName);
                 window.location.href = baseUrl + "/BatalhasMVC/Index";

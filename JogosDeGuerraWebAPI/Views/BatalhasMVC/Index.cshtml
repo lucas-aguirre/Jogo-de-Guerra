@@ -1,7 +1,7 @@
 ﻿@model IEnumerable<JogosDeGuerraModel.Batalha>
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Batalhas";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
@@ -10,7 +10,9 @@
     <div class="row page-content">
 
         <p style="color:#fff">
-            @Html.ActionLink("Create New", "Create")
+            @Html.ActionLink("Criar Nova Batalha como Indía", "Create", new { id = 1 })
+            @Html.ActionLink("Criar Nova Batalha como Persia", "Create", new { id = 2 })
+            @Html.ActionLink("Criar Nova Batalha como Egito", "Create", new { id = 3 })
         </p>
         <table style="color:#fff" class="table">
             <tr>
@@ -36,10 +38,12 @@
             {
                 <tr>
                     <td style="color:#fff">
-                        @Html.DisplayFor(modelItem => item.ExercitoBranco.Usuario.Email)
+                        @Html.DisplayFor(modelItem => item.ExercitoBranco.Usuario.Email) |
+                        @Html.DisplayFor(modelItem => item.ExercitoBranco.Nacao)
                     </td>
                     <td style="color:#fff">
-                        @Html.DisplayFor(modelItem => item.ExercitoPreto.Usuario.Email)
+                        @Html.DisplayFor(modelItem => item.ExercitoPreto.Usuario.Email) |
+                        @Html.DisplayFor(modelItem => item.ExercitoPreto.Nacao)
                     </td>
                     <td style="color:#fff">
                         @if (item.Turno == null)
