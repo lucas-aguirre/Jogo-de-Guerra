@@ -18,8 +18,8 @@
             </a>
             <nav id="nav-login">
                 <ul>
-@*@if (!Utils.ObterLogado())
-{*@
+@if (!Utils.ObterLogado())
+{
                     <li>
                         <a href="/Home/Cadastro" class="btn btn-outline-secondary">
                             Cadastrar-se
@@ -30,15 +30,25 @@
                             Entrar
                         </a>
                     </li>
-    //}
-@*else
+}
+else
 {
+    <li>
+        <a href="/BatalhasMVC/Index" class="btn btn-outline-secondary">
+           Batalhas
+        </a>
+    </li>
+    <li>
+        <a href="/BatalhasMVC/Historico" class="btn btn-outline-secondary">
+            Historico
+        </a>
+    </li>
     <li>
         <a href="/Home/Deslogar" class="btn btn-outline-secondary">
             Deslogar
         </a>
     </li>
-}*@
+}
                 </ul>
             </nav>
                 

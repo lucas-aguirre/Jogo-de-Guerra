@@ -333,6 +333,7 @@
     <Content Include="Views\BatalhasMVC\Index.cshtml" />
     <Content Include="Views\BatalhasMVC\Lobby.cshtml" />
     <Content Include="Views\BatalhasMVC\Tabuleiro.cshtml" />
+    <Content Include="Views\BatalhasMVC\Historico.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
