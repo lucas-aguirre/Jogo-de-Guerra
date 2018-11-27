@@ -55,7 +55,11 @@ namespace JogosDeGuerraWebAPI.Controllers
             return RedirectToAction("Tabuleiro");
         }
 
-
+        public ActionResult Tabuleiro (int BatalhaId)
+        {
+            var batalha = db.Batalhas.Where(x => x.Id.Equals(BatalhaId)).FirstOrDefault();
+            return View(batalha);
+        }
         // GET: BatalhasMVC/Create
         public ActionResult Create(int id)
         {
