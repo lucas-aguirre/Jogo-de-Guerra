@@ -8,6 +8,7 @@
     <title>@ViewBag.Title</title>
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
+    @using JogosDeGuerraWebAPI.Utils
 </head>
 <body>
     <header id="container-top" class="transparent">
@@ -17,6 +18,8 @@
             </a>
             <nav id="nav-login">
                 <ul>
+@*@if (!Utils.ObterLogado())
+{*@
                     <li>
                         <a href="/Home/Cadastro" class="btn btn-outline-secondary">
                             Cadastrar-se
@@ -27,8 +30,18 @@
                             Entrar
                         </a>
                     </li>
+    //}
+@*else
+{
+    <li>
+        <a href="/Home/Deslogar" class="btn btn-outline-secondary">
+            Deslogar
+        </a>
+    </li>
+}*@
                 </ul>
             </nav>
+                
         </div>
     </header>
 

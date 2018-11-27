@@ -22,8 +22,8 @@
                             <input name="Password" type="password" class="form-control" id="email-password" placeholder="Sua senha" required>
                         </div>
                         <div class="form-group">
-                            <label class="label-red" for="ConfirmPassword">Confirme sua Senha</label>
-                            <input name="ConfirmPassword" type="password" class="form-control" id="confirm-password" placeholder="Confirme sua senha" required>
+                            <label class="label-red" for="Nome">Nome</label>
+                            <input name="ConfirmPassword" type="text" class="form-control" id="name" placeholder="Seu Nome" required>
                         </div>
                         <div>
                             <button onclick="register()" class="btn btn-default btn-outline-success btn-block text-uppercase" type="button">Cadastrar</button>
@@ -84,10 +84,21 @@
             var loginData = {
                 Email: $("#email").val(),
                 Password: $("#email-password").val(),
-                ConfirmPassword: $("#confirm-password").val(),
+               // ConfirmPassword: $("#confirm-password").val(),
+            };
+            var createData = {
+                Email: $("#email").val(),
+                Name: $("#name").val(),
             };
 
-            if (!loginData.Email || !loginData.Password || !loginData.ConfirmPassword) {
+            var logData = {
+                grant_type: 'password',
+                username: $("#email").val(),
+                password: $("#email-password").val(),
+            };
+
+            // if (!loginData.Email || !loginData.Password || !loginData.ConfirmPassword) {
+            if (!createData.Email || !loginData.Password || !createData.Name) {
                 $.alert({
                     title: 'Oops...',
                     content: 'Favor preencher todos os campos',
@@ -108,9 +119,32 @@
                 //});
                 sessionStorage.setItem('accessToken', data.token_type + " " + data.access_token);
                 sessionStorage.setItem('emailUsuario', data.userName);
-                window.location.href = baseUrl + "/BatalhasMVC/Index";
+                Register(createData);
+                Login(logData);
             }).fail(showError);
         }
 
+        function Register(createData)
+        {    
+            $.ajax({
+                type: 'POST',
+                url: baseUrl + '/api/Usuarios',
+                data: createData
+            }).done(function (data) {
+                console.log("aaaa")
+            }).fail(showError);
+        }
+
+        function Login (logData)
+        {
+            $.ajax({
+                type: 'POST',
+                url: baseUrl + '/Token',
+                data: logData
+            }).done(function (data) {
+              
+                window.location.href = baseUrl + "/BatalhasMVC/Index";
+            }).fail(showError);
+        }
     </script>
 }
