@@ -9,6 +9,8 @@ namespace JogosDeGuerraModel
 {
     public class Batalha
     {
+        //isReferencetrue
+        //datamember
         public override bool Equals(object obj)
         {
             if (obj is Batalha)
