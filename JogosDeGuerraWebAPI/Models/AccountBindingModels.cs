@@ -26,10 +26,10 @@ namespace JogosDeGuerraWebAPI.Models
         [Display(Name = "Nova senha")]
         public string NewPassword { get; set; }
 
-        [DataType(DataType.Password)]
-        [Display(Name = "Confirmar nova senha")]
-        [Compare("NewPassword", ErrorMessage = "A nova senha e a senha de confirmação não coincidem.")]
-        public string ConfirmPassword { get; set; }
+        //[DataType(DataType.Password)]
+        //[Display(Name = "Confirmar nova senha")]
+        //[Compare("NewPassword", ErrorMessage = "A nova senha e a senha de confirmação não coincidem.")]
+        //public string ConfirmPassword { get; set; }
     }
 
     public class RegisterBindingModel
@@ -44,10 +44,10 @@ namespace JogosDeGuerraWebAPI.Models
         [Display(Name = "Senha")]
         public string Password { get; set; }
 
-        [DataType(DataType.Password)]
-        [Display(Name = "Confirmar senha")]
-        [Compare("Password", ErrorMessage = "A senha e a senha de confirmação não coincidem.")]
-        public string ConfirmPassword { get; set; }
+        //[DataType(DataType.Password)]
+        //[Display(Name = "Confirmar senha")]
+        //[Compare("Password", ErrorMessage = "A senha e a senha de confirmação não coincidem.")]
+        //public string ConfirmPassword { get; set; }
     }
 
     public class RegisterExternalBindingModel

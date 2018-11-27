@@ -21,10 +21,10 @@
                             <label class="label-red" for="Password">Sua Senha</label>
                             <input name="Password" type="password" class="form-control" id="email-password" placeholder="Sua senha" required>
                         </div>
-                        <div class="form-group">
+                        @*<div class="form-group">
                             <label class="label-red" for="ConfirmPassword">Confirme sua Senha</label>
                             <input name="ConfirmPassword" type="password" class="form-control" id="confirm-password" placeholder="Confirme sua senha" required>
-                        </div>
+                        </div>*@
                         <div>
                             <button onclick="register()" class="btn btn-default btn-outline-success btn-block text-uppercase" type="button">Cadastrar</button>
                         </div>
@@ -84,10 +84,11 @@
             var loginData = {
                 Email: $("#email").val(),
                 Password: $("#email-password").val(),
-                ConfirmPassword: $("#confirm-password").val(),
+               // ConfirmPassword: $("#confirm-password").val(),
             };
 
-            if (!loginData.Email || !loginData.Password || !loginData.ConfirmPassword) {
+            // if (!loginData.Email || !loginData.Password || !loginData.ConfirmPassword) {
+            if (!loginData.Email || !loginData.Password ) {
                 $.alert({
                     title: 'Oops...',
                     content: 'Favor preencher todos os campos',
