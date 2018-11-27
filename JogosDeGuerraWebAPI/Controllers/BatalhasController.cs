@@ -63,11 +63,11 @@ namespace JogosDeGuerraWebAPI.Controllers
             return batalha.Estado == Batalha.EstadoBatalhaEnum.NaoIniciado;
         }
 
-        [Route("VerificarBatalha")]
+        [Route("ObterBatalha/{id}")]
         [HttpGet]
-        public Batalha VerificarBatalha(int id)
+        public Batalha ObterBatalha(int? id)
         {
-            var batalha = ctx.Batalhas.Where(x => x.Id.Equals(id)).FirstOrDefault();
+            var batalha = ctx.Batalhas.Find(id);
             return batalha;
         }
 
