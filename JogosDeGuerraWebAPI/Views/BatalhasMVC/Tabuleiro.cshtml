@@ -17,6 +17,15 @@
 
 @section MeusScripts{
     <script src="~/Scripts/Tabuleiro.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            var BatalhaId = @Html.Raw(ViewBag.Id);
+            ObterBatalha(BatalhaId);
+
+            console.log(BatalhaId);
+        });
+    </script>
 }
 
 
