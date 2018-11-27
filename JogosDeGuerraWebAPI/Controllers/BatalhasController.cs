@@ -200,7 +200,6 @@ namespace JogosDeGuerraWebAPI.Controllers
         [HttpGet]
         public Batalha CriarNovaBatalha(AbstractFactoryExercito.Nacao Nacao)
         {
-
             //Obter usuário LOgado
             var usuarioLogado = Utils.Utils.ObterUsuarioLogado(ctx);
             //Verificar se existe uma batalha cujo exercito branco esteja definido

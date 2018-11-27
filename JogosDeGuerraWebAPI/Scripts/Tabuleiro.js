@@ -15,9 +15,8 @@ $(function () {
     var pecaSelecionadaObj = null;
     var pecaElem = null;
     var elementos = null;
-    //1 CriarNovaBatalha, 2 RetomarBatalha
 
-    var urlIniciarBatalha = baseUrl + "/api/Batalhas/Iniciar?Id=2";
+    var urlIniciarBatalha = baseUrl + "/api/Batalhas/Iniciar?Id=1";
 
     var token = sessionStorage.getItem("accessToken");
     var headers = {};
@@ -157,53 +156,53 @@ $(function () {
         }
     }   
 
-    function VerificarSeJogadorEstaNaBatalha(batalha){
-        if (batalha.ExercitoBranco.Usuario.Email == sessionStorage.getItem("EmailUsuario")
-            ||
-            batalha.ExercitoPreto.Usuario.Email == sessionStorage.getItem("EmailUsuario"))
-        {
-            return true;
-        }
+    //function VerificarSeJogadorEstaNaBatalha(batalha){
+    //    if (batalha.ExercitoBranco.Usuario.Email == sessionStorage.getItem("EmailUsuario")
+    //        ||
+    //        batalha.ExercitoPreto.Usuario.Email == sessionStorage.getItem("EmailUsuario"))
+    //    {
+    //        return true;
+    //    }
 
-        return false;
-    }
+    //    return false;
+    //}
 
-    function BatalhaTemDoisJogadores(batalha){
-        if (batalha.ExercitoBranco != null && batalha.ExercitoPreto != null)
-        {
-            return true;
-        }
+    //function BatalhaTemDoisJogadores(batalha){
+    //    if (batalha.ExercitoBranco != null && batalha.ExercitoPreto != null)
+    //    {
+    //        return true;
+    //    }
 
-        return false;
-    }
+    //    return false;
+    //}
 
-    function ObterBatalha(BatalhaId) {
-        var url = baseUrl + "/api/Batalhas/VerificarBatalha" + BatalhaId;
-        var token = sessionStorage.getItem("acessToken");
-        var headers = [];
+    //function ObterBatalha(BatalhaId) {
+    //    var url = baseUrl + "/api/Batalhas/VerificarBatalha" + BatalhaId;
+    //    var token = sessionStorage.getItem("acessToken");
+    //    var headers = [];
 
-        if(token){
-            headers.Authorization = token;
-        }
+    //    if(token){
+    //        headers.Authorization = token;
+    //    }
 
-        $.ajax({
-            type: 'GET',
-            url: baseUrl,
-            headers: headers
-        }).done(function (data) {
-            if (! VerificarSeJogadorEstaNaBatalha(data)) {
-                if (BatalhaTemDoisJogadores(data)) {
-                    VisualizarBatalha();
-                } else {
-                    PerguntarUsuario();
-                }
-            } else {
-                if (BatalhaTemDoisJogadores(data)) {
-                    Jogar(data);
-                } else {
-                    AvisarJogador(data);
-                }
-            }
-        });
-    }
+    //    $.ajax({
+    //        type: 'GET',
+    //        url: baseUrl,
+    //        headers: headers
+    //    }).done(function (data) {
+    //        if (! VerificarSeJogadorEstaNaBatalha(data)) {
+    //            if (BatalhaTemDoisJogadores(data)) {
+    //                VisualizarBatalha();
+    //            } else {
+    //                PerguntarUsuario();
+    //            }
+    //        } else {
+    //            if (BatalhaTemDoisJogadores(data)) {
+    //                Jogar(data);
+    //            } else {
+    //                AvisarJogador(data);
+    //            }
+    //        }
+    //    });
+    //}
 });
