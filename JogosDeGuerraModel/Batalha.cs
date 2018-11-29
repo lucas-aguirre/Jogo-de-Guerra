@@ -2,11 +2,13 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
+using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace JogosDeGuerraModel
 {
+    [DataContract(IsReference = true)]
     public class Batalha
     {
         //isReferencetrue
@@ -23,57 +25,65 @@ namespace JogosDeGuerraModel
             return this.Id.GetHashCode();
         }
 
+        [DataMember]
         public int Id { get; set; }
 
+        [DataMember]
         public int? TabuleiroId { get; set; }
+        [DataMember]
         [ForeignKey("TabuleiroId")]
         public Tabuleiro Tabuleiro { get; set; }
 
-
-        public int? ExercitoBrancoId {get;set;}
+        [DataMember]
+        public int? ExercitoBrancoId { get; set; }
         [ForeignKey("ExercitoBrancoId")]
+        [DataMember]
         public Exercito ExercitoBranco { get; set; }
-
+        [DataMember]
         public int? ExercitoPretoId { get; set; }
+        [DataMember]
         [ForeignKey("ExercitoPretoId")]
         public Exercito ExercitoPreto { get; set; }
-
+        [DataMember]
         public int? VencedorId { get; set; }
+
         [ForeignKey("VencedorId")]
         public Exercito Vencedor { get; set; } = null;
-
+        [DataMember]
         public int? TurnoId { get; set; }
+
         [ForeignKey("TurnoId")]
         public Exercito Turno { get; set; }
 
-        public enum EstadoBatalhaEnum {
-            NaoIniciado =0,
-            Iniciado =1,
-            Finalizado =10,
-            Cancelado =99}
+        public enum EstadoBatalhaEnum
+        {
+            NaoIniciado = 0,
+            Iniciado = 1,
+            Finalizado = 10,
+            Cancelado = 99
+        }
 
+        [DataMember]
         public EstadoBatalhaEnum Estado { get; set; } = 0;
 
         public bool VerificarAlcanceMovimento(Movimento movimento)
         {
-            
-        //Posição Atual
-        Posicao p = Tabuleiro.ObterPosicao(movimento.Elemento);
-        //Diferença entre a posição Atual e a nova.
-        int movLargura = Math.Abs(p.Largura - movimento.posicao.Largura);
-        int movAltura = Math.Abs(p.Altura - movimento.posicao.Altura);
 
-        //Se for um movimento de ataque comparar com o alcançe do elemento 
-        //para ataque. Caso seja um movimento comparar alcance para movimentação 
-        int alcance = (movimento.TipoMovimento == Movimento.EnumTipoMovimento.Atacar) ?
-                movimento.Elemento.AlcanceAtaque : movimento.Elemento.AlcanceMovimento;
-        if ((movAltura > 0 && movAltura <= alcance) ||
-            (movLargura > 0 && movLargura <= alcance))
-        {
-            return true;
-        }
+            //Posição Atual
+            Posicao p = Tabuleiro.ObterPosicao(movimento.Elemento);
+            //Diferença entre a posição Atual e a nova.
+            int movLargura = Math.Abs(p.Largura - movimento.posicao.Largura);
+            int movAltura = Math.Abs(p.Altura - movimento.posicao.Altura);
 
-            
+            //Se for um movimento de ataque comparar com o alcançe do elemento 
+            //para ataque. Caso seja um movimento comparar alcance para movimentação 
+            int alcance = (movimento.TipoMovimento == Movimento.EnumTipoMovimento.Atacar) ?
+                    movimento.Elemento.AlcanceAtaque : movimento.Elemento.AlcanceMovimento;
+            if ((movAltura > 0 && movAltura <= alcance) ||
+                (movLargura > 0 && movLargura <= alcance))
+            {
+                return true;
+            }
             return false;
         }
 
@@ -83,12 +93,12 @@ namespace JogosDeGuerraModel
         }
 
         public void CriarBatalha(
-          AbstractFactoryExercito.Nacao Nacao,
-          Usuario usuarioLogado)
+         AbstractFactoryExercito.Nacao Nacao,
+         Usuario usuarioLogado)
         {
             Exercito e;
             //Se não existir uma batalha cujo exercito preto seja vazio, criar uma nova batalha.
-            
+
             if (this.ExercitoBranco == null)
             {
                 this.ExercitoBranco = new Exercito();
@@ -105,9 +115,9 @@ namespace JogosDeGuerraModel
             e.UsuarioId = usuarioLogado.Id;
         }
 
-        public bool Jogar (Movimento movimento)
+        public bool Jogar(Movimento movimento)
         {
-            if(movimento.TipoMovimento == Movimento.EnumTipoMovimento.Mover)
+            if (movimento.TipoMovimento == Movimento.EnumTipoMovimento.Mover)
             {
                 //O destino da movimentação da peça deve estar vazio.
                 if (this.Tabuleiro.ObterElemento(movimento.posicao) == null)
@@ -119,7 +129,7 @@ namespace JogosDeGuerraModel
                     }
                 }
             }
-            else if(movimento.TipoMovimento == Movimento.EnumTipoMovimento.Atacar)
+            else if (movimento.TipoMovimento == Movimento.EnumTipoMovimento.Atacar)
             {
                 //O destino do ataque deve estar ocupado.
                 if (this.Tabuleiro.ObterElemento(movimento.posicao) != null)
@@ -129,7 +139,8 @@ namespace JogosDeGuerraModel
                     {
                         var oponente = this.Tabuleiro.ObterElemento(movimento.posicao);
                         oponente.Saude -= movimento.Elemento.Ataque;
-                        if (oponente.Saude < 0) {
+                        if (oponente.Saude < 0)
+                        {
                             oponente.Saude = 0;
                             //Caso tenha matado um elemento verificar quantos
                             //elementos vivos o oponente ainda tem.
@@ -166,7 +177,7 @@ namespace JogosDeGuerraModel
         [ForeignKey("ElementoId")]
         public ElementoDoExercito Elemento { get; set; }
 
-        public enum EnumTipoMovimento { Mover, Atacar}
+        public enum EnumTipoMovimento { Mover, Atacar }
         public EnumTipoMovimento TipoMovimento { get; set; }
     }
 }

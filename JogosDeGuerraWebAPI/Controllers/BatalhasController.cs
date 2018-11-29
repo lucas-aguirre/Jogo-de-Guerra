@@ -36,38 +36,14 @@ namespace JogosDeGuerraWebAPI.Controllers
         // GET: api/Batalhas/5
         public Batalha Get(int id)
         {
-            return ctx.Batalhas.Find(id);
-        }
-
-        public Boolean JogadorParticipa(int BatalhaId)
-        {
-            var usuario = Utils.Utils.ObterUsuarioLogado(ctx);
-            var batalha = ctx.Batalhas.Find(BatalhaId);
-
-            if
-                (
-                batalha.ExercitoBranco != null && batalha.ExercitoBranco.Usuario.Id == usuario.Id
-                ||
-                batalha.ExercitoPreto != null && batalha.ExercitoPreto.Usuario.Id == usuario.Id
-                )
-            {
-                return true;
-            }
-
-            return false;
-        }
-
-        public Boolean BatalhaCompleta(int BatalhaId)
-        {
-            var batalha = ctx.Batalhas.Find(BatalhaId);
-            return batalha.Estado == Batalha.EstadoBatalhaEnum.NaoIniciado;
-        }
-
-        [Route("ObterBatalha/{id}")]
-        [HttpGet]
-        public Batalha ObterBatalha(int? id)
-        {
-            var batalha = ctx.Batalhas.Find(id);
+            var batalha = ctx.Batalhas.Include(b => b.ExercitoPreto)
+                .Include(b => b.ExercitoPreto.Usuario)
+                .Include(b => b.ExercitoBranco)
+                .Include(b => b.ExercitoBranco.Usuario)
+                .Include(b => b.Tabuleiro)
+                .Include(b => b.Tabuleiro.ElementosDoExercito)
+                .Include(b => b.Turno)
+                .Include(b => b.Turno.Usuario).Where(b => b.Id == id).FirstOrDefault();
             return batalha;
         }
 
@@ -76,7 +52,6 @@ namespace JogosDeGuerraWebAPI.Controllers
         public Batalha IniciarBatalha(int id)
         {
             var usuario = Utils.Utils.ObterUsuarioLogado(ctx);
-
             var batalha = ctx.Batalhas
                 .Include(b => b.ExercitoPreto)
                 .Include(b => b.ExercitoBranco)
@@ -88,7 +63,6 @@ namespace JogosDeGuerraWebAPI.Controllers
                 || b.ExercitoPreto.Usuario.Email == usuario.Email)
                 && (b.ExercitoBranco != null && b.ExercitoPreto != null)
                 && b.Id == id).FirstOrDefault();
-
             if (batalha == null)
             {
                 var resp = new HttpResponseMessage(HttpStatusCode.NotFound)
@@ -113,8 +87,8 @@ namespace JogosDeGuerraWebAPI.Controllers
                 batalha.Turno = r.Next(100) < 50
                     ? batalha.ExercitoPreto :
                     batalha.ExercitoBranco;
+                batalha.Estado = Batalha.EstadoBatalhaEnum.Iniciado;
             }
-
             ctx.SaveChanges();
             return batalha;
         }
@@ -141,14 +115,7 @@ namespace JogosDeGuerraWebAPI.Controllers
 
             if (usuario.Id == movimento.AutorId)
             {
-                var batalha = ctx.Batalhas
-                    .Include(b => b.ExercitoBranco)
-                    .Include(b => b.ExercitoPreto)
-                    .Include(b => b.Tabuleiro)
-                    .Include(b => b.ExercitoBranco.Elementos)
-                    .Include(b => b.ExercitoPreto.Elementos)
-                    .Where(b => b.Id == movimento.BatalhaId).First();
-
+                var batalha = Get(movimento.BatalhaId);
                 if (movimento.AutorId != movimento.Elemento.Exercito.UsuarioId)
                 {
                     var resp = new HttpResponseMessage(HttpStatusCode.Forbidden)
@@ -170,7 +137,8 @@ namespace JogosDeGuerraWebAPI.Controllers
                         throw new HttpResponseException(resp);
                     }
                     batalha.Turno = null;
-                    batalha.TurnoId = batalha.TurnoId == batalha.ExercitoBrancoId ? batalha.ExercitoPretoId : batalha.ExercitoBrancoId;
+                    batalha.TurnoId = batalha.TurnoId == batalha.ExercitoBrancoId ?
+                        batalha.ExercitoPretoId : batalha.ExercitoBrancoId;
                     ctx.SaveChanges();
                     return batalha;
                 }
@@ -206,6 +174,7 @@ namespace JogosDeGuerraWebAPI.Controllers
         [HttpGet]
         public Batalha CriarNovaBatalha(AbstractFactoryExercito.Nacao Nacao)
         {
+
             //Obter usuário LOgado
             var usuarioLogado = Utils.Utils.ObterUsuarioLogado(ctx);
             //Verificar se existe uma batalha cujo exercito branco esteja definido
@@ -216,7 +185,6 @@ namespace JogosDeGuerraWebAPI.Controllers
                     b.ExercitoBranco != null &&
                     b.ExercitoBranco.Usuario.Email != usuarioLogado.Email)
                 .FirstOrDefault();
-
             if (batalha == null)
             {
                 batalha = new Batalha();

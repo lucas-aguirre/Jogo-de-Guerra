@@ -3,17 +3,14 @@
  * https://www.devmedia.com.br/desenhando-um-tabuleiro-de-damas-em-html-css-js/24591
  * 
  * **/
-
-var IniciarBatalha;
-var MontarTabuleiro;
-var VerificarBatalha;
 var ObterBatalha;
-
+var IniciarBatalha;
+var CriarNovaBatalha;
+var MontarTabuleiro;
 $(function () {
     var baseUrl = window.location.protocol + "//" +
         window.location.hostname +
         (window.location.port ? ':' + window.location.port : '');
-
     var casa_selecionada = null;
     var batalha = null;
     var peca_selecionadaId = null;
@@ -22,13 +19,52 @@ $(function () {
     var pecaElem = null;
     var elementos = null;
 
-
+    //1 CriarNovaBatalha, 2 RetomarBatalha    
     var token = sessionStorage.getItem("accessToken");
 
-    IniciarBatalha = function IniciarBatalha(id) {
-        var urlIniciarBatalha = baseUrl + "/api/Batalhas/Iniciar?Id=" + id;
+    ObterBatalha = function (BatalhaId) {
+        var urlObterBatalha = baseUrl + "/api/Batalhas/" + BatalhaId;
         var headers = {};
+        if (token) {
+            headers.Authorization = token;
+        }
+        $.ajax({
+            type: 'GET',
+            url: urlObterBatalha,
+            headers: headers
+        })
+            .done(function (data) {
+                VerificarBatalha(data);
+            })
+            .fail(
+            function (jqXHR, textStatus) {
+                alert("Código de Erro: " + jqXHR.status + "\n\n" + jqXHR.responseText);
+            });
+    }
 
+    CriarNovaBatalha = function (NacaoID) {
+        var urlCriarNovaBatalha = baseUrl + "/api/Batalhas/CriarNovaBatalha?Nacao=" + NacaoID;
+        var headers = {};
+        if (token) {
+            headers.Authorization = token;
+        }
+        $.ajax({
+            type: 'GET',
+            url: urlCriarNovaBatalha,
+            headers: headers
+        }
+        ).done(function (data) {
+            window.location.reload();
+        }
+            ).fail(
+            function (jqXHR, textStatus) {
+                alert("Código de Erro: " + jqXHR.status + "\n\n" + jqXHR.responseText);
+            });
+    }
+
+    IniciarBatalha = function (BatalhaID) {
+        var urlIniciarBatalha = baseUrl + "/api/Batalhas/Iniciar?Id=" + BatalhaID;
+        var headers = {};
         if (token) {
             headers.Authorization = token;
         }
@@ -38,21 +74,22 @@ $(function () {
             headers: headers
         }
         ).done(function (data) {
-            MontarTabuleiro(data);
+            VerificarBatalha(data);
         }
-        ).fail(
+            ).fail(
             function (jqXHR, textStatus) {
                 alert("Código de Erro: " + jqXHR.status + "\n\n" + jqXHR.responseText);
             });
     }
 
-    MontarTabuleiro = function MontarTabuleiro(batalhaParam) {
+    MontarTabuleiro = function (batalhaParam) {
         pecasNoTabuleiro = [];
-        batalha = batalhaParam;
+        var batalha = batalhaParam;
         var pecas = batalha.Tabuleiro.ElementosDoExercito
         var ExercitoBrancoId = batalha.ExercitoBrancoId;
         var ExercitoPretoId = batalha.ExercitoPretoId;
         var i;
+        $("#tabuleiro").empty();
         for (i = 0; i < batalha.Tabuleiro.Altura; i++) {
             $("#tabuleiro").append("<div id='linha_" + i.toString() + "' class='linha' >");
             pecasNoTabuleiro[i] = [];
@@ -62,6 +99,9 @@ $(function () {
                 $("#linha_" + i.toString()).append("<div id='" + nome_casa + "' class='casa " + classe + "' />");
 
                 for (x = 0; x < pecas.length; x++) {
+                    if (pecas[x].Saude <= 0) {
+                        continue;
+                    }
                     if (pecas[x].posicao.Altura == i && pecas[x].posicao.Largura == j) {
                         pecasNoTabuleiro[i][j] = pecas[x];
                         if (pecas[x].ExercitoId == ExercitoBrancoId) {
@@ -76,7 +116,6 @@ $(function () {
 
             }
         }
-
         $(".casa").click(function () {
             //Retirando a seleção da casa antiga.
             $("#" + casa_selecionada).removeClass("casa_selecionada");
@@ -88,10 +127,9 @@ $(function () {
             $("#info_casa_selecionada").text(casa_selecionada);
             var altura = casa_selecionada.split("_")[1]
             var largura = casa_selecionada.split("_")[2]
-
             if (pecaElem == null) {
                 //Obter o id da imagem selecionada.
-                peca_selecionadaId = $("#" + casa_selecionada).children("img:first").attr("id");
+                peca_selecionadaId = ObterPecaIDNaCasa(casa_selecionada);
                 //Se for nulo
                 if (peca_selecionadaId == null) {
                     pecaElem = null;
@@ -108,105 +146,108 @@ $(function () {
                     Altura: altura,
                     Largura: largura
                 };
+                var ExercitoTurno = (batalha.TurnoId == batalha.ExercitoBrancoId) ? batalha.ExercitoBranco : batalha.ExercitoPreto;
+
+                if (ObterPecaIDNaCasa(casa_selecionada) == null) {
+                    ataque = false;
+                } else {
+                    ataque = true;
+                }
+
                 var movimento = {
                     Posicao: posicaopeca,
-                    AutorId: batalha.Turno.UsuarioId,
+                    AutorId: ExercitoTurno.UsuarioId,
                     BatalhaId: batalha.Id,
-                    ElementoId: pecaSelecionadaObj.Id
+                    ElementoId: pecaSelecionadaObj.Id,
+                    TipoMovimento: ataque ? "Atacar" : "Mover"
                 };
                 var EmailUsuario = sessionStorage.getItem("emailUsuario");
 
-                if (batalha.Turno.Usuario.Email == EmailUsuario &&
-                    batalha.Turno.Id == pecaSelecionadaObj.ExercitoId
-                    ) {
+
+                if (ExercitoTurno.Usuario.Email == EmailUsuario &&
+                    ExercitoTurno.Id == pecaSelecionadaObj.ExercitoId
+                ) {
                     Mover(movimento, pecaElem.parentNode, document.getElementById(casa_selecionada), pecaElem);
-                } else if (batalha.Turno.Usuario.Email != EmailUsuario) {
+                } else if (ExercitoTurno.Usuario.Email != EmailUsuario) {
                     alert("Não é a sua vez!");
-                } else if (batalha.Turno.Id != pecaSelecionadaObj.ExercitoId) {
+                } else if (ExercitoTurno.Id != pecaSelecionadaObj.ExercitoId) {
                     alert("Não é o seu exercito!");
                 }
 
 
                 pecaElem = null;
+                $("#" + casa_selecionada).removeClass("casa_selecionada");
             }
         });
-    }
 
-    function Mover(movimento, posAntiga, posNova, peca) {
-        console.log(posAntiga);
-        console.log(posNova);
-        console.log(peca);
-        var token = sessionStorage.getItem("accessToken");
-        var headers = {};
-
-        if (token) {
-            headers.Authorization = token;
+        function ObterPecaIDNaCasa(casa_selecionada) {
+            return $("#" + casa_selecionada).children("img:first").attr("id");
         }
-        $.ajax({
-            type: 'POST',
-            url: baseUrl + "/api/Batalhas/Jogar",
-            headers: headers,
-            data: movimento
-        })
-            .done(
-                MoverPeca(posAntiga, posNova, peca)
-            )
-            .fail(
-            function (jqXHR, textStatus) {
-                alert("Código de Erro: " + jqXHR.status + "\n\n" + jqXHR.responseText);
-            });
+
+        function Mover(movimento, posAntiga, posNova, peca) {
+            var token = sessionStorage.getItem("accessToken");
+            var headers = {};
+            if (token) {
+                headers.Authorization = token;
+            }
+            $.ajax({
+                type: 'POST',
+                url: baseUrl + "/api/Batalhas/Jogar",
+                headers: headers,
+                data: movimento
+            })
+                .done(
+                function (data) {
+                    MontarTabuleiro(data);
+                    /*
+                    if (movimento.TipoMovimento == "Mover") {
+                        MoverPeca(posAntiga, posNova, peca)
+                    } else {
+                        window.reload();
+                    }
+                    */
+                }
+                )
+                .fail(
+                function (jqXHR, textStatus) {
+                    alert("Código de Erro: " + jqXHR.status + "\n\n" + jqXHR.responseText);
+                });
+        }
+
+
+        function MoverPeca(posAntiga, posNova, peca) {
+            //            var casaElem = document.getElementById(casa_selecionada);
+            //Remover a peça da casa antiga.
+            posAntiga.removeChild(peca);
+            //Colocar a peça na nova casa.
+            posNova.appendChild(peca);
+            //pecaElem = null para não mover a peça no novo clique.
+            posNova.classList.remove("casa_selecionada")
+        }
     }
 
-
-    function MoverPeca(posAntiga, posNova, peca) {
-        //            var casaElem = document.getElementById(casa_selecionada);
-        //Remover a peça da casa antiga.
-        posAntiga.removeChild(pecaElem);
-        //Colocar a peça na nova casa.
-        posNova.appendChild(pecaElem);
-        //pecaElem = null para não mover a peça no novo clique.
-        posNova.classList.remove("casa_selecionada")
-    }
-
-    VerificarBatalha = function VerificarBatalha(Batalha) {
+    function VerificarBatalha(Batalha) {
         if (Batalha.Estado == 0) {
-
             if (Batalha.ExercitoPretoId == null || Batalha.ExercitoBrancoId == null) {
-
-                if (
-                    (Batalha.ExercitoPreto != null && Batalha.ExercitoPreto.Usuario.Email == sessionStorage.getItem("EmailUsuario"))
-                    ||
-                    (Batalha.ExercitoBranco != null && Batalha.ExercitoBranco.Usuario.Email == sessionStorage.getItem("EmailUsuario"))
-                    ) {
-                    alert("Espere, ainda não existe jogador");
+                if ((Batalha.ExercitoPreto != null &&
+                    Batalha.ExercitoPreto.Usuario.Email ==
+                    sessionStorage.getItem("EmailUsuario")) ||
+                    (Batalha.ExercitoBranco != null &&
+                        Batalha.ExercitoBranco.Usuario.Email ==
+                        sessionStorage.getItem("EmailUsuario"))
+                ) {
+                    alert("Espere. Ainda não existe jogador disponível");
                 } else {
                     IniciarBatalha(Batalha.Id);
                 }
             } else {
-
                 IniciarBatalha(Batalha.Id);
             }
-
         } else {
             MontarTabuleiro(Batalha);
+            if (Batalha.Estado == 10 || Batalha.Estado == 99) {
+            }
         }
     }
 
-    ObterBatalha = function ObterBatalha(BatalhaId) {
-        var url = baseUrl + "/api/Batalhas/ObterBatalha/" + BatalhaId;
-        var token = sessionStorage.getItem("accessToken");
-        var headers = [];
-
-        if (token) {
-            headers.Authorization = token;
-        }
-
-        $.ajax({
-            type: 'GET',
-            url: url,
-            headers: headers
-        }).done(function (data) {
-            VerificarBatalha(data);
-        });
-    }
 });
