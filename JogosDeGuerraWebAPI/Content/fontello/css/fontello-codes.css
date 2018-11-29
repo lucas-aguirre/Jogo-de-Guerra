@@ -1,0 +1,4 @@
+
+.icon-arqueiro:before { content: '\e800'; } /* '' */
+.icon-cavaleiro:before { content: '\e801'; } /* '' */
+.icon-guerreiro:before { content: '\e802'; } /* '' */

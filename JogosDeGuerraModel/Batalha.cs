@@ -131,6 +131,8 @@ namespace JogosDeGuerraModel
             }
             else if (movimento.TipoMovimento == Movimento.EnumTipoMovimento.Atacar)
             {
+                //Verificar se é exercito inimigo
+
                 //O destino do ataque deve estar ocupado.
                 if (this.Tabuleiro.ObterElemento(movimento.posicao) != null)
                 {
