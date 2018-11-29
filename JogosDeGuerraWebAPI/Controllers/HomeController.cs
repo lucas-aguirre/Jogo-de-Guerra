@@ -72,6 +72,9 @@ namespace JogosDeGuerraWebAPI.Controllers
 
         public ActionResult Deslogar()
         {
+            Utils.Utils u = new Utils.Utils(); 
+            u.DeslogarUsuario(Request.GetOwinContext());
+            //Request.GetOwinContext().Authentication.SignOut();
             return RedirectToAction("Index");
         }
 
