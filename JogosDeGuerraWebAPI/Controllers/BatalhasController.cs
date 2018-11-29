@@ -52,6 +52,7 @@ namespace JogosDeGuerraWebAPI.Controllers
         public Batalha IniciarBatalha(int id)
         {
             var usuario = Utils.Utils.ObterUsuarioLogado(ctx);
+            //Get batalha
             var batalha = ctx.Batalhas
                 .Include(b => b.ExercitoPreto)
                 .Include(b => b.ExercitoBranco)

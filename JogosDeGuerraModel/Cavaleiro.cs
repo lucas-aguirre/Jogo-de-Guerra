@@ -10,6 +10,7 @@ namespace JogosDeGuerraModel
     {
         public Cavaleiro()
         {
+            this.Classe = "cavaleiro";
             this.Saude = 100;
         }
         public override int AlcanceMovimento { get; protected set; } = 3;

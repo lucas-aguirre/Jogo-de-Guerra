@@ -66,7 +66,8 @@ namespace JogosDeGuerraWebAPI.Controllers
             AbstractFactoryExercito.Nacao nacao = (AbstractFactoryExercito.Nacao)id;
             var batalhaController = new BatalhasController();
             var batalha = batalhaController.CriarNovaBatalha(nacao);
-            return RedirectToAction("Lobby");
+            //return RedirectToAction("Lobby");
+            return RedirectToAction("Index");
         }
 
         //// POST: BatalhasMVC/Create

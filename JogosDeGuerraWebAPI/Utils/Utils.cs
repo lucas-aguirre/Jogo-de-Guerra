@@ -14,14 +14,15 @@ namespace JogosDeGuerraWebAPI.Utils
             if (ident.IsAuthenticated)
             {
                 var usuario = ctx.Usuarios.Where(u => u.Email == ident.Name).SingleOrDefault();
-                if (usuario == null)
-                {
-                    Usuario u = new Usuario();
-                    u.Email = ident.Name;
-                    ctx.Usuarios.Add(u);
-                    ctx.SaveChanges();
-                    return u;
-                }
+
+                //if (usuario == null)
+                //{
+                //    Usuario u = new Usuario();
+                //    u.Email = ident.Name;
+                //    ctx.Usuarios.Add(u);
+                //    ctx.SaveChanges();
+                //    return u;
+                //}
                 return usuario;
             }
             return null;

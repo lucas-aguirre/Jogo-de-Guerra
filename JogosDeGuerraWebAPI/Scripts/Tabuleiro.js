@@ -102,15 +102,15 @@ $(function () {
                     if (pecas[x].Saude <= 0) {
                         continue;
                     }
+
                     if (pecas[x].posicao.Altura == i && pecas[x].posicao.Largura == j) {
                         pecasNoTabuleiro[i][j] = pecas[x];
                         if (pecas[x].ExercitoId == ExercitoBrancoId) {
-                            $("#" + nome_casa).append("<img src='https://www.w3schools.com/images/compatible_firefox.gif' class='peca' id='" + nome_casa.replace("casa", "peca_preta") + "'/>");
+                            $("#" + nome_casa).append("<i style='font-size: 40px; color: red;' class='peca icon-" + pecas[i].Classe + "' id='" + nome_casa.replace("casa", "peca_preta") + "'/>");
                         }
                         else if (pecas[x].ExercitoId == ExercitoPretoId) {
-                            $("#" + nome_casa).append("<img src='https://www.w3schools.com/images/compatible_safari.gif' class='peca' id='" + nome_casa.replace("casa", "peca_branca") + "'/>");
+                            $("#" + nome_casa).append("<i style='font-size: 40px; color: red;' class='peca icon-" + pecas[i].Classe + "' id='" + nome_casa.replace("casa", "peca_branca") + "'/>");
                         }
-
                     }
                 }
 
@@ -181,7 +181,7 @@ $(function () {
         });
 
         function ObterPecaIDNaCasa(casa_selecionada) {
-            return $("#" + casa_selecionada).children("img:first").attr("id");
+            return $("#" + casa_selecionada).children("i:first").attr("id");
         }
 
         function Mover(movimento, posAntiga, posNova, peca) {
