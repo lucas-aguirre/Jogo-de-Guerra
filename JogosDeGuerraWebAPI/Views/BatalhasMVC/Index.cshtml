@@ -9,99 +9,133 @@
 <div class="container">
     <div class="row page-content">
 
-        <p style="color:#fff">
-            @Html.ActionLink("Criar Nova Batalha como Indía", "Create", new { id = 1 })
-            @Html.Label(" | ")
-            @Html.ActionLink("Criar Nova Batalha como Persia", "Create", new { id = 2 })
-            @Html.Label(" | ")
-            @Html.ActionLink("Criar Nova Batalha como Egito", "Create", new { id = 3 })
-            @Html.Label(" | ")
-            @Html.ActionLink("Criar Nova Batalha como Asteca", "Create", new { id = 4 })
-        </p>
-        <table style="color:#fff" class="table">
-            <tr>
-                <th style="color:#fff">
-                    Exercito Branco
-                </th>
-                <th style="color:#fff">
-                    Exercito Preto
-                </th>
-                <th style="color:#fff">
-                    Turno
-                </th>
-                <th style="color:#fff">
-                    Vencedor
-                </th>
-                <th style="color:#fff">
-                    Estado
-                </th>
-                <th style="color:#fff"></th>
-            </tr>
+        <a href="#" data-toggle="modal" data-target="#myModal" >Jogar</a>
 
-            @foreach (var item in Model)
-            {
+
+            <table style="color:#fff" class="table">
                 <tr>
-                    <td style="color:#fff">
-                        @Html.DisplayFor(modelItem => item.ExercitoBranco.Usuario.Email)
-                        @Html.Label(" | ")
-                        @Html.DisplayFor(modelItem => item.ExercitoBranco.Nacao)
-                    </td>
-                    <td style="color:#fff">
-                        @if (item.ExercitoPreto == null)
-                        {
-                            @Html.Label("-");
-                        }
-                        else
-                        {
-                        @Html.DisplayFor(modelItem => item.ExercitoPreto.Usuario.Email)
-                        @Html.Label(" | ")
-                        @Html.DisplayFor(modelItem => item.ExercitoPreto.Nacao)
-                        }
-                    </td>
-                    <td style="color:#fff">
-                        @if (item.Turno == null)
-                        {
-                            @Html.Label("-");
-                        }
-                        else if (item.TurnoId == item.ExercitoBrancoId)
-                        {
-                            @Html.Label("Exercito Branco");
-                        }
-                        else if (item.TurnoId != item.ExercitoBrancoId)
-                        {
-                            @Html.Label("Exercito Preto");
-                        }
-                    </td>
-                    <td style="color:#fff">
-                        @if (item.Vencedor != null)
-                        {
-                            @Html.DisplayFor(modelItem => item.Vencedor.Usuario.Email)
-                        }
-                        else
-                        {
-                            @Html.Label("-");
-                        }
-                    </td>
-                    <td style="color:#fff">
-                        @Html.DisplayFor(modelItem => item.Estado)
-                    </td>
-                    <td style="color:#fff">
-                        @if (item.Estado == JogosDeGuerraModel.Batalha.EstadoBatalhaEnum.NaoIniciado)
-                        {
-                            @Html.ActionLink("Iniciar Batalha ", "Iniciar", new { id = item.Id })
-                        }
-                        else
-                        {
-                            @Html.ActionLink("Jogar ", "Iniciar", new { id = item.Id })
-                        }
-                        @Html.Label("|")
-                        @Html.ActionLink("Details", "Details", new { id = item.Id }) |
-                        @Html.ActionLink("Delete", "Delete", new { id = item.Id })
-
-                    </td>
+                    <th style="color:#fff">
+                        Exercito Branco
+                    </th>
+                    <th style="color:#fff">
+                        Exercito Preto
+                    </th>
+                    <th style="color:#fff">
+                        Turno
+                    </th>
+                    <th style="color:#fff">
+                        Vencedor
+                    </th>
+                    <th style="color:#fff">
+                        Estado
+                    </th>
+                    <th style="color:#fff"></th>
                 </tr>
-            }
 
-        </table>
+                @foreach (var item in Model)
+            {
+                    <tr>
+                        <td style="color:#fff">
+                            @Html.DisplayFor(modelItem => item.ExercitoBranco.Usuario.Email)
+                            @Html.Label(" | ")
+                            @Html.DisplayFor(modelItem => item.ExercitoBranco.Nacao)
+                        </td>
+                        <td style="color:#fff">
+                            @if (item.ExercitoPreto == null)
+                            {
+                                @Html.Label("-");
+                            }
+                            else
+                            {
+                                @Html.DisplayFor(modelItem => item.ExercitoPreto.Usuario.Email)
+                                @Html.Label(" | ")
+                                @Html.DisplayFor(modelItem => item.ExercitoPreto.Nacao)
+                            }
+                        </td>
+                        <td style="color:#fff">
+                            @if (item.Turno == null)
+                            {
+                                @Html.Label("-");
+                            }
+                            else if (item.TurnoId == item.ExercitoBrancoId)
+                            {
+                                @Html.Label("Exercito Branco");
+                            }
+                            else if (item.TurnoId != item.ExercitoBrancoId)
+                            {
+                                @Html.Label("Exercito Preto");
+                            }
+                        </td>
+                        <td style="color:#fff">
+                            @if (item.Vencedor != null)
+                            {
+                                @Html.DisplayFor(modelItem => item.Vencedor.Usuario.Email)
+                            }
+                            else
+                            {
+                                @Html.Label("-");
+                            }
+                        </td>
+                        <td style="color:#fff">
+                            @Html.DisplayFor(modelItem => item.Estado)
+                        </td>
+                        <td style="color:#fff">
+                            @if (item.Estado == JogosDeGuerraModel.Batalha.EstadoBatalhaEnum.NaoIniciado)
+                            {
+                                @Html.ActionLink("Iniciar Batalha ", "Iniciar", new { id = item.Id })
+                            }
+                            else
+                            {
+                                @Html.ActionLink("Jogar ", "Iniciar", new { id = item.Id })
+                            }
+                            @Html.Label("|")
+                            @Html.ActionLink("Details", "Details", new { id = item.Id }) |
+                            @Html.ActionLink("Delete", "Delete", new { id = item.Id })
+
+                        </td>
+                    </tr>
+                }
+
+            </table>
+</div>
+</div>
+
+
+<div class="modal fade" id="myModal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+            </div>
+            <div class="modal-body">
+                <div class="wrimagecard-topimage_header">
+                </div>
+                <p style="color:#fff">
+                    <button class="btn btn-danger btn-md" data-dismiss="modal" onclick="window.location.href = baseUrl + '/BatalhasMVC/Create/1'">Jogar como Índia</button>
+                    <button class="btn btn-danger btn-md" data-dismiss="modal" onclick="window.location.href = baseUrl + '/BatalhasMVC/Create/2'">Jogar como Persia</button>
+                    <button class="btn btn-danger btn-md" data-dismiss="modal" onclick="window.location.href = baseUrl + '/BatalhasMVC/Create/3'">Jogar como Egito</button>
+                    <button class="btn btn-danger btn-md" data-dismiss="modal" onclick="window.location.href = baseUrl + '/BatalhasMVC/Create/4'">Jogar como Asteca</button>
+                </p>
+                
+
+                <button class="btn btn-danger btn-md" data-dismiss="modal">Cancelar</button>
+            </div>
+        </div>
     </div>
 </div>
+
+
+@section MeusScripts{
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.0/jquery-confirm.min.js"></script>
+    <script type="text/javascript">
+
+       // $('#myModal').modal({ backdrop: 'static', keyboard: false });
+        //$('#myModal').modal('toggle');
+
+        $().ready(function () {
+            $("a").on("click", function (e) {
+                e.preventDefault();
+                $('#lblModalMarcacao').text('Marcação: ' + $(this).attr("data-marcacao"));
+            });
+        });
+    </script>
+    }

@@ -284,7 +284,11 @@
     <Content Include="Areas\HelpPage\Views\Help\DisplayTemplates\CollectionModelDescription.cshtml" />
     <Content Include="Areas\HelpPage\Views\Help\DisplayTemplates\ApiGroup.cshtml" />
     <Content Include="Areas\HelpPage\Views\Help\Api.cshtml" />
+    <Content Include="Images\10f9cb20467392b16a1f13fe8daef4bc.png" />
     <Content Include="Images\background.gif" />
+    <Content Include="Images\images.png" />
+    <Content Include="Images\india-26828_640.png" />
+    <Content Include="Images\main-qimg-35f657cda8a198c3d483f2dc527cd96d.png" />
     <Content Include="Scripts\bootstrap.bundle.js" />
     <Content Include="Scripts\bootstrap.bundle.min.js" />
     <Content Include="Scripts\bootstrap.js" />
