@@ -80,6 +80,7 @@ namespace JogosDeGuerraWebAPI.Controllers
         public ActionResult Tabuleiro (int BatalhaId)
         {
             var batalha = db.Batalhas.Where(x => x.Id.Equals(BatalhaId)).FirstOrDefault();
+            ViewBag.Id = batalha.Id;
             return View(batalha);
         }
 
