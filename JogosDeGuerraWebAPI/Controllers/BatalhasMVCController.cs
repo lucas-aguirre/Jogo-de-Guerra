@@ -68,8 +68,6 @@ namespace JogosDeGuerraWebAPI.Controllers
             }
             return View(batalha);
         }
-
-
         public ActionResult Iniciar(int id)
         {
             var batalhaController = new BatalhasController();
