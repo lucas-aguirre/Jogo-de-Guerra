@@ -41,7 +41,7 @@ namespace JogosDeGuerraWebAPI.Utils
 
         public void DeslogarUsuario(IOwinContext ctx)
         {
-            //ta dando ruim,fala q está null
+            
             ctx.Authentication.SignOut();
         }
 
