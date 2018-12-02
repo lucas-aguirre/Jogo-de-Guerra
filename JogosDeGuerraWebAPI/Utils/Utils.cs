@@ -1,13 +1,15 @@
 ﻿using JogosDeGuerraModel;
+using Microsoft.Owin;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using System.Web.Mvc;
 
-namespace JogosDeGuerraWebAPI.Utils
+namespace JogosDeGuerraWebAPI.Utils 
 {
-    public class Utils
-    {
+    public class Utils : Controller
+{
         public static Usuario ObterUsuarioLogado(JogosDeGuerraModel.ModelJogosDeGuerra ctx)
         {
             var ident = System.Web.HttpContext.Current.User.Identity;
@@ -36,6 +38,12 @@ namespace JogosDeGuerraWebAPI.Utils
                 return true;
             }
             return false;
+        }
+
+        public void DeslogarUsuario(IOwinContext ctx)
+        {
+            
+            ctx.Authentication.SignOut();
         }
 
     }
