@@ -3,7 +3,6 @@
     --input-padding-y: .75rem;
 }
 
-
 .card-signin {
     vertical-align: central;
     border: 0;
@@ -105,13 +104,13 @@
     background-color: #3b5998;
 }
 
-.form-visual{
+.form-visual {
     background: #18181f;
     border: 1px solid #b5333a;
     border-radius: 6px;
 }
 
-.h5-red, .label-red, .p-red{
+.h5-red, .label-red, .p-red {
     color: #b5333a;
 }
 
@@ -123,24 +122,25 @@
     margin-top: 15%;
 }
 
-.login-form > label, .register-form > label {
-    margin-bottom: 0px !important;
-}
-
-@media (min-width: 1366px) { 
-    .login-form {
-        margin-top: 10%;
+    .login-form > label, .register-form > label {
+        margin-bottom: 0px !important;
     }
-    .register-form {
-        margin-top: 5%;
-    }
-}
 
-.field-password{
+.field-password {
     width: 75% !important;
 }
 
-.btn-login{
+.btn-login {
     margin-left: 10px;
     width: 22%;
+}
+
+@media (min-width: 1366px) {
+    .login-form {
+        margin-top: 0%;
+    }
+
+    .register-form {
+        margin-top: 0%;
+    }
 }

@@ -66,7 +66,8 @@ body {
     line-height: 1.5;
     color: #212529;
     text-align: left;
-    background-color: #171721;
+    background-image: url(../Images/background.gif);
+    background-color: #253142;
     /*overflow: hidden !important;*/
 }
 

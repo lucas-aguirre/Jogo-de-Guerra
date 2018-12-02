@@ -13,7 +13,7 @@ namespace JogosDeGuerraWebAPI.Controllers
         public JogosDeGuerraModel.ModelJogosDeGuerra ctx { get; set; } = new JogosDeGuerraModel.ModelJogosDeGuerra();
         public ActionResult Index()
         {
-            ViewBag.Title = "Home Page";
+            ViewBag.Title = "Página Inicial";
             bool usuarioAutenticado = 
                 Utils.Utils.ObterUsuarioLogado(
                     new JogosDeGuerraModel.ModelJogosDeGuerra()
