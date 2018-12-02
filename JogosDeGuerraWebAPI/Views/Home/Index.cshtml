@@ -1,29 +1,44 @@
-﻿<h1 class="text-center text-white">Jogos de Guerra</h1>
+﻿@model IEnumerable<JogosDeGuerraModel.Batalha>
+
+<h1 class="text-center text-white">Jogos de Guerra</h1>
 <div class="container">
     <div class="row" style="margin-top: 60px;">
-        <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+        <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
             <div class="card-deck">
                 <div class="card bg-light">
                     <div class="card-body text-center">
-                        <p class="card-text">Alguma coisa aqui</p>
+                        <h4>Total de Usuários Cadastrados</h4>
+                        <p class="card-text home-counter">@ViewBag.Usuarios</p>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+        <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
             <div class="card-deck">
                 <div class="card bg-light">
                     <div class="card-body text-center">
-                        <p class="card-text">Alguma coisa aqui</p>
+                        <h4>Batalhas não Iniciadas</h4>
+                        <p class="card-text home-counter">@Model.Where(x => x.Estado.Equals(JogosDeGuerraModel.Batalha.EstadoBatalhaEnum.NaoIniciado)).Count()</p>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+        <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
             <div class="card-deck">
                 <div class="card bg-light">
                     <div class="card-body text-center">
-                        <p class="card-text">Alguma coisa aqui</p>
+                        <h4>Batalhas em Andamento</h4>
+                        <p class="card-text home-counter">@Model.Where(x => x.Estado.Equals(JogosDeGuerraModel.Batalha.EstadoBatalhaEnum.Iniciado)).Count()</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
+            <div class="card-deck">
+                <div class="card bg-light">
+                    <div class="card-body text-center">
+                        <h4>Batalhas Finalizadas</h4>
+                        <p class="card-text home-counter">@Model.Where(x => x.Estado.Equals(JogosDeGuerraModel.Batalha.EstadoBatalhaEnum.Finalizado)).Count()</p>
                     </div>
                 </div>
             </div>

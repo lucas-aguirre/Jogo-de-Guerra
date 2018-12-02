@@ -35,90 +35,58 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.0/jquery-confirm.min.css">
 @section MeusScripts{
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.0/jquery-confirm.min.js"></script>
+    <script src="~/Scripts/General.js"></script>
     <script type="text/javascript">
 
-        function showError(jqXHR) {            
-            var response = jqXHR.responseJSON,
-                text_error = "";
-
-            console.log(response);
-
-            //if (response.ModelState.model.Password.lenght > 0) {
-            //    text_error = response.ModelState.model.Password[0];
-            //} 
-
-            if (response) {
-                $.alert({
-                    title: 'Oops...',
-                    content: text_error,
-                    theme: 'modern',
-                });
-            }
-        }
-
         function register() {
-            var loginData = {
-                Email: $("#email").val(),
-                Password: $("#email-password").val(),
-               // ConfirmPassword: $("#confirm-password").val(),
-            };
-            var createData = {
-                Email: $("#email").val(),
-                Name: $("#name").val(),
-            };
+            var Name = $("#name").val(),
+                Email = $("#email").val(),
+                Password = $("#email-password").val();
 
             var logData = {
                 grant_type: 'password',
-                username: $("#email").val(),
-                password: $("#email-password").val(),
+                username: Email,
+                password: Password,
             };
 
-            // if (!loginData.Email || !loginData.Password || !loginData.ConfirmPassword) {
-            if (!createData.Email || !loginData.Password || !createData.Name) {
-                $.alert({
-                    title: 'Oops...',
-                    content: 'Favor preencher todos os campos',
-                    theme: 'modern',
-                });
-                return false;
+            if (!Email || !Password || !Name) {
+                errorAlert(ops, 'Favor preencher todos os campos');
+            } else if (Password.length < 6) {
+                errorAlert(ops, 'A senha deve conter no mínimo 6 caracteres');
             }
 
             $.ajax({
                 type: 'POST',
                 url: baseUrl + '/api/Account/Register',
-                data: loginData
-            }).done(function (data) {
-                //$.confirm({
-                //    title: 'Sucesso',
-                //    content: 'Usuário registrado com sucesso',
-                //    theme: 'modern',
-                //});
+                data: {
+                    Email: Email,
+                    Password: Password,
+                },
+            }).success(function (data) {
                 sessionStorage.setItem('accessToken', data.token_type + " " + data.access_token);
                 sessionStorage.setItem('emailUsuario', data.userName);
-                Register(createData);
+                Register(Name, Email);
                 Login(logData);
             }).fail(showError);
         }
 
-        function Register(createData)
-        {    
+        function Register(Name, Email) {
             $.ajax({
                 type: 'POST',
                 url: baseUrl + '/api/Usuarios',
-                data: createData
-            }).done(function (data) {
-                console.log("aaaa")
-            }).fail(showError);
+                data: {
+                    Name: Name,
+                    Email: Email,
+                },
+            });
         }
 
-        function Login (logData)
-        {
+        function Login(logData) {
             $.ajax({
                 type: 'POST',
                 url: baseUrl + '/Token',
                 data: logData
             }).done(function (data) {
-              
                 window.location.href = baseUrl + "/BatalhasMVC/Index";
             }).fail(showError);
         }

@@ -14,6 +14,13 @@ namespace JogosDeGuerraWebAPI.Controllers
     {
         private ModelJogosDeGuerra db = new ModelJogosDeGuerra();
 
+        public ActionResult Lobby()
+        {
+            ViewBag.Title = "Lobby";
+
+            return View();
+        }
+
         // GET: BatalhasMVC
         public ActionResult Index()
         {

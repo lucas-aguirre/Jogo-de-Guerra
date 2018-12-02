@@ -19,40 +19,40 @@
             </a>
             <nav id="nav-login">
                 <ul>
-@if (!Utils.ObterLogado())
-{
-                    <li>
-                        <a href="/Home/Cadastro" class="btn btn-outline-secondary">
-                            Cadastrar-se
-                        </a>
-                    </li>
-                    <li>
-                        <a href="/Home/Login" class="btn btn-outline-secondary">
-                            Entrar
-                        </a>
-                    </li>
-}
-else
-{
-    <li>
-        <a href="/BatalhasMVC/Index" class="btn btn-outline-secondary">
-           Batalhas
-        </a>
-    </li>
-    <li>
-        <a href="/BatalhasMVC/Historico" class="btn btn-outline-secondary">
-            Historico
-        </a>
-    </li>
-    <li>
-        <a href="/Home/Deslogar" class="btn btn-outline-secondary">
-            Deslogar
-        </a>
-    </li>
-}
+                    @if (!Utils.ObterLogado())
+                    {
+                        <li>
+                            <a href="/Home/Cadastro" class="btn btn-outline-secondary">
+                                Cadastrar-se
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/Home/Login" class="btn btn-outline-secondary">
+                                Entrar
+                            </a>
+                        </li>
+                    }
+                    else
+                    {
+                        <li>
+                            <a href="/BatalhasMVC/Index" class="btn btn-outline-secondary">
+                                Batalhas
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/BatalhasMVC/Historico" class="btn btn-outline-secondary">
+                                Historico
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/Home/Deslogar" class="btn btn-outline-secondary">
+                                Deslogar
+                            </a>
+                        </li>
+                    }
                 </ul>
             </nav>
-                
+
         </div>
     </header>
 
@@ -65,10 +65,10 @@ else
     </div>
     <script>
         var baseUrl =
-                window.location.protocol +
-                "//" +
-                window.location.hostname +
-                (window.location.port ? ':' + window.location.port : '');
+            window.location.protocol +
+            "//" +
+            window.location.hostname +
+            (window.location.port ? ':' + window.location.port : '');
     </script>
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")

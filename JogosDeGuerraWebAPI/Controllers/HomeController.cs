@@ -1,4 +1,5 @@
-﻿using System;
+﻿using JogosDeGuerraModel;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Principal;
@@ -11,20 +12,15 @@ namespace JogosDeGuerraWebAPI.Controllers
     public class HomeController : Controller
     {
         public JogosDeGuerraModel.ModelJogosDeGuerra ctx { get; set; } = new JogosDeGuerraModel.ModelJogosDeGuerra();
+
         public ActionResult Index()
         {
             ViewBag.Title = "Página Inicial";
-            bool usuarioAutenticado = 
-                Utils.Utils.ObterUsuarioLogado(
-                    new JogosDeGuerraModel.ModelJogosDeGuerra()
-                    ) != null;
+            ViewBag.Usuarios = ctx.Usuarios.Count();
 
-            //if (!usuarioAutenticado)
-            //{
-            //    return RedirectToAction("Login");
-            //}
+            var batalhas = ctx.Batalhas.ToList();
 
-            return View();
+            return View(batalhas);
         }
 
         public ActionResult Login()

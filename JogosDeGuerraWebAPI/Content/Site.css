@@ -50,7 +50,9 @@
     margin-top: 60px;
 }
 
-
+.home-counter {
+    font-size: 40px;
+}
 /* Super Small Devices */
 @media (min-width : 320px) {
 }
