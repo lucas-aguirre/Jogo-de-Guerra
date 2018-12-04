@@ -21,7 +21,7 @@
                             <input name="Password" type="password" class="form-control" id="email-password" placeholder="Sua senha" required>
                         </div>
                         <div>
-                            <button onclick="register()" class="btn btn-default btn-outline-success btn-block text-uppercase" type="button">Cadastrar</button>
+                            <button onclick="register()" class="btn btn-default btn-outline-success btn-block text-uppercase btn-register" type="button">Cadastrar</button>
                         </div>
                     </form>
                 </div>
@@ -37,6 +37,12 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.0/jquery-confirm.min.js"></script>
     <script src="~/Scripts/General.js"></script>
     <script type="text/javascript">
+
+        $(document).keypress(function (e) {
+            if (e.which == 13) {
+                $(".btn-register").trigger('click');
+            }
+        });
 
         function register() {
             var Name = $("#name").val(),

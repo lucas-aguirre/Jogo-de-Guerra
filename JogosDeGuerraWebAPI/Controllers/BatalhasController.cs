@@ -11,8 +11,7 @@ using System.Web.Http;
 
 namespace JogosDeGuerraWebAPI.Controllers
 {
-
-    [Authorize]
+    //[Authorize]
     [RoutePrefix("api/Batalhas")]
     public class BatalhasController : ApiController
     {
@@ -199,25 +198,5 @@ namespace JogosDeGuerraWebAPI.Controllers
             //ctx.SaveChangesAsync();
             return batalha;
         }
-
-
-
-        // POST: api/Batalhas
-        public void Post([FromBody]Batalha value)
-        {
-
-        }
-
-        // PUT: api/Batalhas/5
-        public void Put(int id, [FromBody]Batalha value)
-        {
-        }
-
-        // DELETE: api/Batalhas/5
-        public void Delete(int id)
-        {
-        }
-
-
     }
 }

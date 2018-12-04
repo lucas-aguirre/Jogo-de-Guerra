@@ -3,27 +3,62 @@
 @{
     ViewBag.Title = "Tabuleiro";
 }
-<h2>@ViewBag.Title</h2>
-<div id="tabuleiro">
+<div class="row container-tabuleiro" style="display:none">
+    <div class="col-md-3 col-lg-3">
+        <div class="container container-card">
+            <div class="card left-card player-card">
+                <img class="card-img-top" src=".../100px180/" alt="Imagem de capa do card">
+                <div class="card-body">
+                    <h5 class="card-title">Título do card</h5>
+                    <p class="card-text">Um exemplo de texto rápido para construir o título do card e fazer preencher o conteúdo do card.</p>
+                    <a href="#" class="btn btn-primary">Visitar</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6 col-lg-6">
+        <div id="tabuleiro"></div>
+    </div>
+    <div class="col-md-3 col-lg-3">
+        <div class="container container-card">
+            <div class="card right-card player-card">
+                <img class="card-img-top" src=".../100px180/" alt="Imagem de capa do card">
+                <div class="card-body">
+                    <h5 class="card-title">Título do card</h5>
+                    <p class="card-text">Um exemplo de texto rápido para construir o título do card e fazer preencher o conteúdo do card.</p>
+                    <a href="#" class="btn btn-primary">Visitar</a>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
-<div id="info">
-    <ul>
-        <li>Casa selecionada: <span id="info_casa_selecionada" /></li>
-        <li>Peca selecionada: <span id="info_ peca_selecionada" /></li>
-    </ul>
-</div>
+
 
 @Styles.Render("~/Content/TabuleiroEstilo.css")
 
 @section MeusScripts{
     <script src="~/Scripts/Tabuleiro.js"></script>
-
+    <script src="https://cdn.jsdelivr.net/npm/gasparesganga-jquery-loading-overlay@2.1.6/dist/loadingoverlay.min.js"></script>
     <script>
+
+        $("body").LoadingOverlay("show", {
+            text: "Carregando partida...",
+            textColor: "rgb(255,255,255, 0.8)",
+            imageColor: "#4a2026",
+            textAnimation: "2s fadein",
+            background: "rgb(23,24,34, 0.8)",
+            fade: [0, 300],
+        });
+
+        setTimeout(function () {
+            $.LoadingOverlay("hide");
+            $(".loadingoverlay").fadeOut("fast");
+            $(".container-tabuleiro").fadeIn("fast");
+        }, 2000);
+
         $(document).ready(function () {
             var BatalhaId = @Html.Raw(ViewBag.Id);
             ObterBatalha(BatalhaId);
-
-            console.log(BatalhaId);
         });
     </script>
 }

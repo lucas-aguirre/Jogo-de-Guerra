@@ -10,6 +10,7 @@ using JogosDeGuerraModel;
 
 namespace JogosDeGuerraWebAPI.Controllers
 {
+    [Authorize]
     public class BatalhasMVCController : Controller
     {
         private ModelJogosDeGuerra db = new ModelJogosDeGuerra();
@@ -39,42 +40,6 @@ namespace JogosDeGuerraWebAPI.Controllers
             return View(batalhas);
         }
 
-
-        public ActionResult Historico()
-        {
-            var usuarioLogado = Utils.Utils.ObterUsuarioLogado(db);
-
-            var batalhas = db.Batalhas
-                .Include(b => b.ExercitoBranco)
-                .Include(b => b.ExercitoBranco.Usuario)
-                .Include(b => b.ExercitoPreto)
-                .Include(b => b.ExercitoPreto.Usuario)
-                .Include(b => b.Tabuleiro)
-                .Include(b => b.Turno)
-                .Include(b => b.Turno.Usuario)
-                .Include(b => b.Vencedor)
-                .Include(b => b.Vencedor.Usuario)
-                .Where(b => b.ExercitoBranco.Usuario.Email == usuarioLogado.Email || b.ExercitoPreto.Usuario.Email == usuarioLogado.Email)
-                .ToList();
-
-            return View(batalhas);
-        }
-
-
-        // GET: BatalhasMVC/Details/5
-        public ActionResult Details(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Batalha batalha = db.Batalhas.Find(id);
-            if (batalha == null)
-            {
-                return HttpNotFound();
-            }
-            return View(batalha);
-        }
         public ActionResult Iniciar(int id)
         {
             var batalhaController = new BatalhasController();

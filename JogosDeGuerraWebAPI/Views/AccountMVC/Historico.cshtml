@@ -1,7 +1,7 @@
 ﻿@model IEnumerable<JogosDeGuerraModel.Batalha>
 
 @{
-    ViewBag.Title = "Hall de Batalhas";
+    ViewBag.Title = "Batalhas";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
@@ -42,7 +42,7 @@
             {
                 <tr>
                     <td style="color:#fff">
-                        @Html.DisplayFor(modelItem => item.ExercitoBranco.Usuario.Name)
+                        @Html.DisplayFor(modelItem => item.ExercitoBranco.Usuario.Email)
                         @Html.Label(" | ")
                         @Html.DisplayFor(modelItem => item.ExercitoBranco.Nacao)
                     </td>
@@ -53,7 +53,7 @@
                         }
                         else
                         {
-                            @Html.DisplayFor(modelItem => item.ExercitoPreto.Usuario.Name)
+                            @Html.DisplayFor(modelItem => item.ExercitoPreto.Usuario.Email)
                             @Html.Label(" | ")
                             @Html.DisplayFor(modelItem => item.ExercitoPreto.Nacao)
                         }
@@ -86,16 +86,13 @@
                         @Html.DisplayFor(modelItem => item.Estado)
                     </td>
                     <td style="color:#fff">
-                        @if (item.ExercitoBranco != null && item.ExercitoPreto != null)
+                        @if (item.Estado == JogosDeGuerraModel.Batalha.EstadoBatalhaEnum.NaoIniciado)
                         {
-                            if (item.Estado == JogosDeGuerraModel.Batalha.EstadoBatalhaEnum.NaoIniciado)
-                            {
-                                @Html.ActionLink("Iniciar Batalha ", "Iniciar", new { id = item.Id })
-                            }
-                            else
-                            {
-                                @Html.ActionLink("Jogar ", "Iniciar", new { id = item.Id })
-                            }
+                            @Html.ActionLink("Iniciar Batalha ", "Iniciar", new { id = item.Id })
+                        }
+                        else
+                        {
+                            @Html.ActionLink("Jogar ", "Iniciar", new { id = item.Id })
                         }
                     </td>
                 </tr>

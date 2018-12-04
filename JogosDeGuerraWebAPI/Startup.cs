@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.Owin;
+using Microsoft.Owin.Security.Cookies;
 using Owin;
 
 [assembly: OwinStartup(typeof(JogosDeGuerraWebAPI.Startup))]
@@ -13,6 +14,12 @@ namespace JogosDeGuerraWebAPI
         public void Configuration(IAppBuilder app)
         {
             ConfigureAuth(app);
+
+            app.UseCookieAuthentication(new CookieAuthenticationOptions
+            {
+                AuthenticationType = "ApplicationCookie",
+                LoginPath = new PathString("/Home/Login")
+            });
         }
     }
 }

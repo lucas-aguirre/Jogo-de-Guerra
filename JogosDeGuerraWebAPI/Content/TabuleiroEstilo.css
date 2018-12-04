@@ -1,22 +1,26 @@
 ﻿#tabuleiro {
-    width: 402px;
-    height: 402px;
+    width: 562px;
+    height: 100%;
     border: solid 1px;
+    vertical-align: middle;
+    margin: 0 auto;
 }
 
 .linha {
-    height: 50px;
+    height: 70px;
 }
 
 .casa {
-    width: 50px;
+    width: 70px;
     height: 100%;
     float: left;
     cursor: pointer;
+    border: 1px solid #c53336;
+    border-radius: 2px;
 }
 
-.casa_branca {
-    background-color: #fff;
+.casa_vermelha {
+    background-color: #4a2026;
 }
 
 .casa_preta {
@@ -25,4 +29,9 @@
 
 .casa_selecionada {
     background-color: #FF0000;
+}
+
+.char-icon{
+    font-size: 50px;
+    display:block;
 }

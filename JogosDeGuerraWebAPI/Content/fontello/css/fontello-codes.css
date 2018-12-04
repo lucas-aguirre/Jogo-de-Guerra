@@ -1,4 +1,10 @@
 
-.icon-arqueiro:before { content: '\e800'; } /* '' */
-.icon-cavaleiro:before { content: '\e801'; } /* '' */
-.icon-guerreiro:before { content: '\e802'; } /* '' */
+.icon-eye:before { content: '\e800'; } /* '' */
+.icon-guerreiro-direita:before { content: '\e803'; } /* '' */
+.icon-guerreiro-esquerda:before { content: '\e804'; } /* '' */
+.icon-arqueiro-direita:before { content: '\e805'; } /* '' */
+.icon-arqueiro-esquerda:before { content: '\e806'; } /* '' */
+.icon-cavaleiro-direita:before { content: '\e807'; } /* '' */
+.icon-cavaleiro-esquerda:before { content: '\e808'; } /* '' */
+.icon-menu:before { content: '\f008'; } /* '' */
+.icon-user:before { content: '\f061'; } /* '' */

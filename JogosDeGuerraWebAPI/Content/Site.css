@@ -53,26 +53,38 @@
 .home-counter {
     font-size: 40px;
 }
-/* Super Small Devices */
-@media (min-width : 320px) {
+
+.container-tabuleiro{
+    margin-top: -95px;
 }
 
-/* Extra Small Devices */
-@media (min-width : 480px) {
+.player-card {
+    background: none;
+    border: 1px solid #c53336;
+    border-radius: 10px;
+    height: 100%;
+    padding: 30px;
 }
 
-/*Dispositivos small (telefones em modo paisagem, com 576px ou mais)*/
-@media (min-width: 576px) {
+.white {
+    color: #fff;
 }
 
-/*Dispositivos médios (tablets com 768px ou mais)*/
-@media (min-width: 768px) {
+.left-card {
+    margin-left: 50px;
 }
 
-/*Dispositivos large (desktops com 992px ou mais)*/
-@media (min-width: 992px) {
+.right-card {
+    margin-right: 50px;
 }
 
-/*Dispositivos extra large (desktops grandes com 1200px ou mais)*/
-@media (min-width: 1200px) {
+.container-card{
+    height: 100%;
+}
+
+
+@media (min-width: 1366px) {
+    .container-tabuleiro {
+        margin-top: -100px;
+    }
 }

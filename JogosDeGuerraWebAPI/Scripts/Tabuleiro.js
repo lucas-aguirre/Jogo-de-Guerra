@@ -37,9 +37,9 @@ $(function () {
                 VerificarBatalha(data);
             })
             .fail(
-            function (jqXHR, textStatus) {
-                alert("Código de Erro: " + jqXHR.status + "\n\n" + jqXHR.responseText);
-            });
+                function (jqXHR, textStatus) {
+                    alert("Código de Erro: " + jqXHR.status + "\n\n" + jqXHR.responseText);
+                });
     }
 
     CriarNovaBatalha = function (NacaoID) {
@@ -56,7 +56,7 @@ $(function () {
         ).done(function (data) {
             window.location.reload();
         }
-            ).fail(
+        ).fail(
             function (jqXHR, textStatus) {
                 alert("Código de Erro: " + jqXHR.status + "\n\n" + jqXHR.responseText);
             });
@@ -76,7 +76,7 @@ $(function () {
         ).done(function (data) {
             VerificarBatalha(data);
         }
-            ).fail(
+        ).fail(
             function (jqXHR, textStatus) {
                 alert("Código de Erro: " + jqXHR.status + "\n\n" + jqXHR.responseText);
             });
@@ -95,7 +95,7 @@ $(function () {
             pecasNoTabuleiro[i] = [];
             for (j = 0; j < batalha.Tabuleiro.Largura; j++) {
                 var nome_casa = "casa_" + i.toString() + "_" + j.toString();
-                var classe = (i % 2 == 0 ? (j % 2 == 0 ? "casa_branca" : "casa_preta") : (j % 2 != 0 ? "casa_branca" : "casa_preta"));
+                var classe = (i % 2 == 0 ? (j % 2 == 0 ? "casa_vermelha" : "casa_preta") : (j % 2 != 0 ? "casa_vermelha" : "casa_preta"));
                 $("#linha_" + i.toString()).append("<div id='" + nome_casa + "' class='casa " + classe + "' />");
 
                 for (x = 0; x < pecas.length; x++) {
@@ -106,10 +106,10 @@ $(function () {
                     if (pecas[x].posicao.Altura == i && pecas[x].posicao.Largura == j) {
                         pecasNoTabuleiro[i][j] = pecas[x];
                         if (pecas[x].ExercitoId == ExercitoBrancoId) {
-                            $("#" + nome_casa).append("<i style='font-size: 40px; color: red;' class='peca icon-" + pecas[i].Classe + "' id='" + nome_casa.replace("casa", "peca_preta") + "'/>");
+                            $("#" + nome_casa).append("<i style='color: green;' class='peca char-icon icon-" + pecas[i].Classe + "-direita' id='" + nome_casa.replace("casa", "peca_preta") + "'/>");
                         }
                         else if (pecas[x].ExercitoId == ExercitoPretoId) {
-                            $("#" + nome_casa).append("<i style='font-size: 40px; color: red;' class='peca icon-" + pecas[i].Classe + "' id='" + nome_casa.replace("casa", "peca_branca") + "'/>");
+                            $("#" + nome_casa).append("<i style='color: green;' class='peca char-icon icon-" + pecas[i].Classe + "-esquerda' id='" + nome_casa.replace("casa", "peca_branca") + "'/>");
                         }
                     }
                 }
@@ -197,32 +197,21 @@ $(function () {
                 data: movimento
             })
                 .done(
-                function (data) {
-                    MontarTabuleiro(data);
-                    /*
-                    if (movimento.TipoMovimento == "Mover") {
-                        MoverPeca(posAntiga, posNova, peca)
-                    } else {
-                        window.reload();
+                    function (data) {
+                        MontarTabuleiro(data);
+                        /*
+                        if (movimento.TipoMovimento == "Mover") {
+                            MoverPeca(posAntiga, posNova, peca)
+                        } else {
+                            window.reload();
+                        }
+                        */
                     }
-                    */
-                }
                 )
                 .fail(
-                function (jqXHR, textStatus) {
-                    alert("Código de Erro: " + jqXHR.status + "\n\n" + jqXHR.responseText);
-                });
-        }
-
-
-        function MoverPeca(posAntiga, posNova, peca) {
-            //            var casaElem = document.getElementById(casa_selecionada);
-            //Remover a peça da casa antiga.
-            posAntiga.removeChild(peca);
-            //Colocar a peça na nova casa.
-            posNova.appendChild(peca);
-            //pecaElem = null para não mover a peça no novo clique.
-            posNova.classList.remove("casa_selecionada")
+                    function (jqXHR, textStatus) {
+                        alert("Código de Erro: " + jqXHR.status + "\n\n" + jqXHR.responseText);
+                    });
         }
     }
 

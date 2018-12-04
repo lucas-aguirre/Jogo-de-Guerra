@@ -45,6 +45,5 @@ namespace JogosDeGuerraWebAPI.Utils
             
             ctx.Authentication.SignOut();
         }
-
     }
 }
