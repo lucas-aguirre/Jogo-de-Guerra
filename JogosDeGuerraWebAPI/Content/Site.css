@@ -48,6 +48,10 @@
     max-width: 100%;
 }
 
+.img-choose{
+    border-radius: 50px;
+}
+
 .page-content {
     margin-top: 30px;
     margin-bottom: 30px;

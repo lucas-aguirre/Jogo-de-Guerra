@@ -110,7 +110,7 @@ namespace JogosDeGuerraWebAPI.Controllers
             }
 
             movimento.Batalha =
-                ctx.Batalhas.Find(movimento.BatalhaId);
+                this.Get(movimento.BatalhaId);
             var usuario = Utils.Utils.ObterUsuarioLogado(ctx);
 
             if (usuario.Id == movimento.AutorId)

@@ -89,7 +89,9 @@ $(function () {
         var ExercitoBrancoId = batalha.ExercitoBrancoId;
         var ExercitoPretoId = batalha.ExercitoPretoId;
         var i;
+
         $("#tabuleiro").empty();
+
         for (i = 0; i < batalha.Tabuleiro.Altura; i++) {
             $("#tabuleiro").append("<div id='linha_" + i.toString() + "' class='linha' >");
             pecasNoTabuleiro[i] = [];
@@ -106,10 +108,10 @@ $(function () {
                     if (pecas[x].posicao.Altura == i && pecas[x].posicao.Largura == j) {
                         pecasNoTabuleiro[i][j] = pecas[x];
                         if (pecas[x].ExercitoId == ExercitoBrancoId) {
-                            $("#" + nome_casa).append("<i style='color: green;' class='peca char-icon icon-" + pecas[i].Classe + "-direita' id='" + nome_casa.replace("casa", "peca_preta") + "'/>");
+                            $("#" + nome_casa).append("<i style='color: green;' class='peca char-icon icon-" + pecas[x].Classe + "-direita' id='" + nome_casa.replace("casa", "peca_preta") + "'/>");
                         }
                         else if (pecas[x].ExercitoId == ExercitoPretoId) {
-                            $("#" + nome_casa).append("<i style='color: green;' class='peca char-icon icon-" + pecas[i].Classe + "-esquerda' id='" + nome_casa.replace("casa", "peca_branca") + "'/>");
+                            $("#" + nome_casa).append("<i style='color: green;' class='peca char-icon icon-" + pecas[x].Classe + "-esquerda' id='" + nome_casa.replace("casa", "peca_branca") + "'/>");
                         }
                     }
                 }
@@ -199,13 +201,6 @@ $(function () {
                 .done(
                     function (data) {
                         MontarTabuleiro(data);
-                        /*
-                        if (movimento.TipoMovimento == "Mover") {
-                            MoverPeca(posAntiga, posNova, peca)
-                        } else {
-                            window.reload();
-                        }
-                        */
                     }
                 )
                 .fail(

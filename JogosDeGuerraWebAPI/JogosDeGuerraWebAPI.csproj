@@ -295,6 +295,10 @@
     <Content Include="Areas\HelpPage\Views\Help\DisplayTemplates\ApiGroup.cshtml" />
     <Content Include="Areas\HelpPage\Views\Help\Api.cshtml" />
     <Content Include="Images\background.gif" />
+    <Content Include="Images\bandeira-asteca.png" />
+    <Content Include="Images\bandeira-egito.png" />
+    <Content Include="Images\bandeira-india.png" />
+    <Content Include="Images\bandeira-persa.png" />
     <Content Include="Images\Icons\arqueiro.svg" />
     <Content Include="Images\Icons\cavaleiro.svg" />
     <Content Include="Images\Icons\guerreiro.svg" />
