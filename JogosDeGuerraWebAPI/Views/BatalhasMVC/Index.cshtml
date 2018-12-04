@@ -7,17 +7,12 @@
 
 <h1 class="text-center text-white">@ViewBag.Title</h1>
 <div class="container">
-    <div class="row page-content">
-
-        <p style="color:#fff">
-            @Html.ActionLink("Criar Nova Batalha como Indía", "Create", new { id = 1 })
-            @Html.Label(" | ")
-            @Html.ActionLink("Criar Nova Batalha como Persia", "Create", new { id = 2 })
-            @Html.Label(" | ")
-            @Html.ActionLink("Criar Nova Batalha como Egito", "Create", new { id = 3 })
-            @Html.Label(" | ")
-            @Html.ActionLink("Criar Nova Batalha como Asteca", "Create", new { id = 4 })
-        </p>
+    <div class="row text-center page-content" style="display:block">
+        <a href="javascript:void(0)" class="btn btn-outline-success" data-toggle="modal" data-target="#myModal">
+            Iniciar nova batalha
+        </a>
+    </div>
+    <div class="row">
         <table style="color:#fff" class="table">
             <tr>
                 <th style="color:#fff">
@@ -104,23 +99,29 @@
         </table>
     </div>
 </div>
-<button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">Open Modal</button>
 
 <!-- Modal -->
 <div id="myModal" class="modal fade" role="dialog">
     <div class="modal-dialog">
-
         <!-- Modal content-->
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal">&times;</button>
-                <h4 class="modal-title">Modal Header</h4>
+                <h4 class="text-center">Escolha seu exército</h4>
             </div>
             <div class="modal-body">
-                <p>Some text in the modal.</p>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <p style="color:#fff">
+                    <a href="/BatalhasMVC/Create/1">
+                        <img border="0" alt="W3Schools" src="logo_w3s.gif" width="100" height="100">
+                    </a>
+
+                    @Html.ActionLink("Exército Indiano", "Create", new { id = 1 })
+                    @Html.Label(" | ")
+                    @Html.ActionLink("Exército Persia", "Create", new { id = 2 })
+                    @Html.Label(" | ")
+                    @Html.ActionLink("Exército Egito", "Create", new { id = 3 })
+                    @Html.Label(" | ")
+                    @Html.ActionLink("Exército Asteca", "Create", new { id = 4 })
+                </p>
             </div>
         </div>
 
