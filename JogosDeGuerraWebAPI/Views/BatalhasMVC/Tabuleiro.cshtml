@@ -3,8 +3,7 @@
 @{
     ViewBag.Title = "Tabuleiro";
 }
-@*<div class="row container-tabuleiro" style="display:none">*@
-<div class="row container-tabuleiro">
+<div class="row container-tabuleiro" style="display:none">
     <div class="col-md-3 col-lg-3">
         <div class="container container-card">
             <div class="card left-card player-card">
@@ -48,20 +47,20 @@
 
         var BatalhaId = @Html.Raw(ViewBag.Id);
 
-        //$("body").LoadingOverlay("show", {
-        //    text: "Carregando partida...",
-        //    textColor: "rgb(255,255,255, 0.8)",
-        //    imageColor: "#4a2026",
-        //    textAnimation: "2s fadein",
-        //    background: "rgb(23,24,34, 0.8)",
-        //    fade: [0, 300],
-        //});
+        $("body").LoadingOverlay("show", {
+            text: "Carregando partida...",
+            textColor: "rgb(255,255,255, 0.8)",
+            imageColor: "#4a2026",
+            textAnimation: "2s fadein",
+            background: "rgb(23,24,34, 0.8)",
+            fade: [0, 300],
+        });
 
-        //setTimeout(function () {
-        //    $.LoadingOverlay("hide");
-        //    $(".loadingoverlay").fadeOut("fast");
-        //    $(".container-tabuleiro").fadeIn("fast");
-        //}, 2000);
+        setTimeout(function () {
+            $.LoadingOverlay("hide");
+            $(".loadingoverlay").fadeOut("fast");
+            $(".container-tabuleiro").fadeIn("fast");
+        }, 2000);
 
         $(document).ready(function () {
             ObterBatalha(BatalhaId);
