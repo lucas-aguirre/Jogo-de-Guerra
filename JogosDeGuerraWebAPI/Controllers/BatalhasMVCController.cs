@@ -49,7 +49,19 @@ namespace JogosDeGuerraWebAPI.Controllers
 
         public ActionResult Tabuleiro (int BatalhaId)
         {
-            var batalha = db.Batalhas.Where(x => x.Id.Equals(BatalhaId)).FirstOrDefault();
+            var batalha = db.Batalhas
+                .Where(x => x.Id.Equals(BatalhaId))
+                .Include(b => b.ExercitoBranco)
+                .Include(b => b.ExercitoBranco.Usuario)
+                .Include(b => b.ExercitoPreto)
+                .Include(b => b.ExercitoPreto.Usuario)
+                .Include(b => b.Tabuleiro)
+                .Include(b => b.Turno)
+                .Include(b => b.Turno.Usuario)
+                .Include(b => b.Vencedor)
+                .Include(b => b.Vencedor.Usuario)
+                .FirstOrDefault();
+
             ViewBag.Id = batalha.Id;
             return View(batalha);
         }
@@ -160,6 +172,26 @@ namespace JogosDeGuerraWebAPI.Controllers
                 db.Dispose();
             }
             base.Dispose(disposing);
+        }
+
+        public ActionResult Historico()
+        {
+            var usuarioLogado = Utils.Utils.ObterUsuarioLogado(db);
+
+            var batalhas = db.Batalhas
+                .Include(b => b.ExercitoBranco)
+                .Include(b => b.ExercitoBranco.Usuario)
+                .Include(b => b.ExercitoPreto)
+                .Include(b => b.ExercitoPreto.Usuario)
+                .Include(b => b.Tabuleiro)
+                .Include(b => b.Turno)
+                .Include(b => b.Turno.Usuario)
+                .Include(b => b.Vencedor)
+                .Include(b => b.Vencedor.Usuario)
+                .Where(b => b.ExercitoBranco.Usuario.Email == usuarioLogado.Email || b.ExercitoPreto.Usuario.Email == usuarioLogado.Email)
+                .ToList();
+
+            return View(batalhas);
         }
     }
 }

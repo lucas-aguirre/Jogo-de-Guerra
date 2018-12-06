@@ -3,15 +3,18 @@
 @{
     ViewBag.Title = "Tabuleiro";
 }
+@*<div class="row container-tabuleiro" style="display:none">*@
 <div class="row container-tabuleiro">
     <div class="col-md-3 col-lg-3">
         <div class="container container-card">
             <div class="card left-card player-card">
-                <img class="card-img-top" src=".../100px180/" alt="Imagem de capa do card">
                 <div class="card-body">
-                    <h5 class="card-title">Título do card</h5>
-                    <p class="card-text">Um exemplo de texto rápido para construir o título do card e fazer preencher o conteúdo do card.</p>
-                    <a href="#" class="btn btn-primary">Visitar</a>
+                    <strong><p style="font-size: 20px;" class="card-text">Nome do Jogador</p></strong>
+                    <p class="card-text">
+                        @Model.ExercitoBranco.Usuario.Name
+                    </p>
+                    <strong><p style="font-size: 20px;" class="card-text">Exército</p></strong>
+                    <p class="card-text">@Model.ExercitoBranco.Nacao</p>
                 </div>
             </div>
         </div>
@@ -21,12 +24,14 @@
     </div>
     <div class="col-md-3 col-lg-3">
         <div class="container container-card">
-            <div class="card right-card player-card">
-                <img class="card-img-top" src=".../100px180/" alt="Imagem de capa do card">
+            <div class="card left-card player-card">
                 <div class="card-body">
-                    <h5 class="card-title">Título do card</h5>
-                    <p class="card-text">Um exemplo de texto rápido para construir o título do card e fazer preencher o conteúdo do card.</p>
-                    <a href="#" class="btn btn-primary">Visitar</a>
+                    <strong><p style="font-size: 20px;" class="card-text">Nome do Jogador</p></strong>
+                    <p class="card-text">
+                        @Model.ExercitoPreto.Usuario.Name
+                    </p>
+                    <strong><p style="font-size: 20px;" class="card-text">Exército</p></strong>
+                    <p class="card-text">@Model.ExercitoPreto.Nacao</p>
                 </div>
             </div>
         </div>

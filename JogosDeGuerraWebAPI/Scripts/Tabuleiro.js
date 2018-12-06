@@ -7,6 +7,9 @@ var ObterBatalha;
 var IniciarBatalha;
 var CriarNovaBatalha;
 var MontarTabuleiro;
+var CorExercitoBranco;
+var CorExercitoPreto;
+
 $(function () {
     var baseUrl = window.location.protocol + "//" +
         window.location.hostname +
@@ -108,10 +111,10 @@ $(function () {
                     if (pecas[x].posicao.Altura == i && pecas[x].posicao.Largura == j) {
                         pecasNoTabuleiro[i][j] = pecas[x];
                         if (pecas[x].ExercitoId == ExercitoBrancoId) {
-                            $("#" + nome_casa).append("<i style='color: green;' class='peca char-icon icon-" + pecas[x].Classe + "-direita' id='" + nome_casa.replace("casa", "peca_preta") + "'/>");
+                            $("#" + nome_casa).append("<i class='peca char-icon icon-" + pecas[x].Classe + "-direita exercito-" + batalha.ExercitoBranco.Nacao + "' id='" + nome_casa.replace("casa", "peca_preta") + "'/>");
                         }
                         else if (pecas[x].ExercitoId == ExercitoPretoId) {
-                            $("#" + nome_casa).append("<i style='color: green;' class='peca char-icon icon-" + pecas[x].Classe + "-esquerda' id='" + nome_casa.replace("casa", "peca_branca") + "'/>");
+                            $("#" + nome_casa).append("<i class='peca char-icon icon-" + pecas[x].Classe + "-esquerda exercito-" + batalha.ExercitoPreto.Nacao + "' id='" + nome_casa.replace("casa", "peca_branca") + "'/>");
                         }
                     }
                 }
