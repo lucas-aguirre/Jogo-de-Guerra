@@ -1,0 +1,142 @@
+﻿@model IEnumerable<JogosDeGuerraModel.Batalha>
+
+@{
+    ViewBag.Title = "Hall de Batalhas";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1 class="text-center text-white">@ViewBag.Title</h1>
+<div class="container">
+    <div class="row text-center page-content" style="display:block">
+        <a href="javascript:void(0)" class="btn btn-outline-success" data-toggle="modal" data-target="#myModal">
+            Iniciar nova batalha
+        </a>
+    </div>
+    <div class="row">
+        <table style="color:#fff" class="table">
+            <tr>
+                <th style="color:#fff">
+                    Exercito Branco
+                </th>
+                <th style="color:#fff">
+                    Exercito Preto
+                </th>
+                <th style="color:#fff">
+                    Turno
+                </th>
+                <th style="color:#fff">
+                    Vencedor
+                </th>
+                <th style="color:#fff">
+                    Estado
+                </th>
+                <th style="color:#fff"></th>
+            </tr>
+
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td style="color:#fff">
+                        @Html.DisplayFor(modelItem => item.ExercitoBranco.Usuario.Name)
+                        @Html.Label(" | ")
+                        @Html.DisplayFor(modelItem => item.ExercitoBranco.Nacao)
+                    </td>
+                    <td style="color:#fff">
+                        @if (item.ExercitoPreto == null)
+                        {
+                            @Html.Label("-");
+                        }
+                        else
+                        {
+                            @Html.DisplayFor(modelItem => item.ExercitoPreto.Usuario.Name)
+                            @Html.Label(" | ")
+                            @Html.DisplayFor(modelItem => item.ExercitoPreto.Nacao)
+                        }
+                    </td>
+                    <td style="color:#fff">
+                        @if (item.Turno == null)
+                        {
+                            @Html.Label("-");
+                        }
+                        else if (item.TurnoId == item.ExercitoBrancoId)
+                        {
+                            @Html.Label("Exercito Branco");
+                        }
+                        else if (item.TurnoId != item.ExercitoBrancoId)
+                        {
+                            @Html.Label("Exercito Preto");
+                        }
+                    </td>
+                    <td style="color:#fff">
+                        @if (item.Vencedor != null)
+                        {
+                            @Html.DisplayFor(modelItem => item.Vencedor.Usuario.Email)
+                        }
+                        else
+                        {
+                            @Html.Label("-");
+                        }
+                    </td>
+                    <td style="color:#fff">
+                        @Html.DisplayFor(modelItem => item.Estado)
+                    </td>
+                    <td style="color:#fff">
+                        @if (item.ExercitoBranco != null && item.ExercitoPreto != null)
+                        {
+                            if (item.Estado == JogosDeGuerraModel.Batalha.EstadoBatalhaEnum.NaoIniciado)
+                            {
+                                @Html.ActionLink("Iniciar Batalha ", "Iniciar", new { id = item.Id })
+                            }
+                            else
+                            {
+                                @Html.ActionLink("Jogar ", "Iniciar", new { id = item.Id })
+                            }
+                        }
+                    </td>
+                </tr>
+            }
+
+        </table>
+    </div>
+</div>
+
+<!-- Modal -->
+<div id="myModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header text-center" style="display:block">
+                <h4>Escolha seu exército</h4>
+            </div>
+            <div class="modal-body">
+                <div class="row text-center">
+                    <div class="col-md-3 col-lg-3">
+                        <h5>Exército Asteca</h5>
+                        <a href="/BatalhasMVC/Create/4">
+                            <img class="img-choose" border="0" alt="Exército Asteca" src="~/Images/bandeira-asteca.png" width="70" height="70">
+                        </a>
+                    </div>
+                    <div class="col-md-3 col-lg-3">
+                        <h5>Exército Egípcio</h5>
+                        <a href="/BatalhasMVC/Create/3">
+                            <img class="img-choose" border="0" alt="Exército Egípcio" src="~/Images/bandeira-egito.png" width="70" height="70">
+                        </a>
+                    </div>
+                    <div class="col-md-3 col-lg-3">
+                        <h5>Exército Indiano</h5>
+                        <a href="/BatalhasMVC/Create/1">
+                            <img class="img-choose" border="0" alt="Exército Indiano" src="~/Images/bandeira-india.png" width="70" height="70">
+                        </a>
+                    </div>
+                    <div class="col-md-3 col-lg-3">
+                        <h5>Exército Persa</h5>
+                        <a href="/BatalhasMVC/Create/2">
+                            <img class="img-choose" border="0" alt="Exército Persa" src="~/Images/bandeira-persa.png" width="70" height="70">
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>

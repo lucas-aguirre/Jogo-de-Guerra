@@ -1,0 +1,100 @@
+﻿<div class="container centered">
+    <div class="row">
+        <div class="col-sm-9 col-md-7 col-lg-5 mx-auto register-form">
+            <div class="card card-signin my-5">
+                <div class="card-body form-visual">
+                    <h5 class="h5-red text-center">Cadastre-se</h5>
+                    <form>
+                        <div>
+                            @ViewBag.Message
+                        </div>
+                        <div class="form-group">
+                            <label class="label-red" for="Nome">Nome</label>
+                            <input name="Name" type="text" class="form-control" id="name" placeholder="Seu Nome" required autofocus>
+                        </div>
+                        <div class="form-group">
+                            <label class="label-red" for="email">Endereço de e-mail</label>
+                            <input name="email" type="email" class="form-control" id="email" placeholder="Seu e-mail" required>
+                        </div>
+                        <div class="form-group">
+                            <label class="label-red" for="Password">Sua Senha</label>
+                            <input name="Password" type="password" class="form-control" id="email-password" placeholder="Sua senha" required>
+                        </div>
+                        <div>
+                            <button onclick="register()" class="btn btn-default btn-outline-success btn-block text-uppercase btn-register" type="button">Cadastrar</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@Styles.Render("~/Content/Login.css")
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.0/jquery-confirm.min.css">
+@section MeusScripts{
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.0/jquery-confirm.min.js"></script>
+    <script src="~/Scripts/General.js"></script>
+    <script type="text/javascript">
+
+        $(document).keypress(function (e) {
+            if (e.which == 13) {
+                $(".btn-register").trigger('click');
+            }
+        });
+
+        function register() {
+            var Name = $("#name").val(),
+                Email = $("#email").val(),
+                Password = $("#email-password").val();
+
+            var logData = {
+                grant_type: 'password',
+                username: Email,
+                password: Password,
+            };
+
+            if (!Email || !Password || !Name) {
+                errorAlert(ops, 'Favor preencher todos os campos');
+            } else if (Password.length < 6) {
+                errorAlert(ops, 'A senha deve conter no mínimo 6 caracteres');
+            }
+
+            $.ajax({
+                type: 'POST',
+                url: baseUrl + '/api/Account/Register',
+                data: {
+                    Email: Email,
+                    Password: Password,
+                },
+            }).success(function (data) {
+                sessionStorage.setItem('accessToken', data.token_type + " " + data.access_token);
+                sessionStorage.setItem('emailUsuario', data.userName);
+                Register(Name, Email);
+                Login(logData);
+            }).fail(showError);
+        }
+
+        function Register(Name, Email) {
+            $.ajax({
+                type: 'POST',
+                url: baseUrl + '/api/Usuarios',
+                data: {
+                    Name: Name,
+                    Email: Email,
+                },
+            });
+        }
+
+        function Login(logData) {
+            $.ajax({
+                type: 'POST',
+                url: baseUrl + '/Token',
+                data: logData
+            }).done(function (data) {
+                window.location.href = baseUrl + "/BatalhasMVC/Index";
+            }).fail(showError);
+        }
+    </script>
+}

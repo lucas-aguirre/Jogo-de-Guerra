@@ -1,41 +1,79 @@
 ﻿<!DOCTYPE html>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width" />
     <title>@ViewBag.Title</title>
     @Styles.Render("~/Content/css")
+    @Styles.Render("~/Content/fontello/css/fontello.css")
     @Scripts.Render("~/bundles/modernizr")
+    @using JogosDeGuerraWebAPI.Utils
 </head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
 <body>
-    <div class="navbar navbar-inverse navbar-fixed-top">
-        <div class="container">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                @Html.ActionLink("Nome do aplicativo", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+    @if (ViewContext.RouteData.Values["Action"].ToString() != "Tabuleiro")
+    {
+        <header id="container-top" class="transparent">
+            <div class="container header-container">
+                <a href="/" class="btn btn-outline-secondary">
+                    Página Inicial
+                </a>
+                <nav id="nav-login">
+                    <ul>
+                        @if (!Utils.ObterLogado())
+                        {
+                            <li>
+                                <a href="/Home/Cadastro" class="btn btn-outline-secondary">
+                                    Cadastrar-se
+                                </a>
+                            </li>
+                            <li>
+                                <a href="/Home/Login" class="btn btn-outline-secondary">
+                                    Entrar
+                                </a>
+                            </li>
+                        }
+                        else
+                        {
+                            <li>
+                                <a href="/BatalhasMVC/Index" class="btn btn-outline-secondary">
+                                    Batalhas
+                                </a>
+                            </li>
+                            <li>
+                                <a href="/BatalhasMVC/Historico" class="btn btn-outline-secondary">
+                                    Histórico
+                                </a>
+                            </li>
+                            <li>
+                                <a href="/Home/Deslogar" class="btn btn-outline-secondary">
+                                    Logout
+                                </a>
+                            </li>
+                        }
+                    </ul>
+                </nav>
+
             </div>
-            <div class="navbar-collapse collapse">
-                <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("Início", "Index", "Home", new { area = "" }, null)</li>
-                    <li>@Html.ActionLink("API", "Index", "Help", new { area = "" }, null)</li>
-                </ul>
+        </header>
+    }
+
+    <div class="body-content">
+        <div id="container-header">
+            <div class="container-fluid header-content">
+                @RenderBody()
             </div>
         </div>
     </div>
-    <div class="container body-content">
-        @RenderBody()
-        <hr />
-        <footer>
-            <p>&copy; @DateTime.Now.Year - Meu Aplicativo ASP.NET</p>
-        </footer>
-    </div>
-    @Scripts.Render("~/bundles/jquery")  
+    <script>
+        var baseUrl =
+            window.location.protocol +
+            "//" +
+            window.location.hostname +
+            (window.location.port ? ':' + window.location.port : '');
+    </script>
+    @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
     @RenderSection("scripts", required: false)
     @RenderSection("MeusScripts", required: false)

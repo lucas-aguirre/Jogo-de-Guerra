@@ -40,13 +40,18 @@ namespace JogosDeGuerra
                     AbstractFactoryExercito.CriarFactoryExercito(
                         AbstractFactoryExercito.Nacao.Persia);
             }
-            else if(sender == BtnIndia)
+            else if (sender == BtnIndia)
             {
                 factory =
                     AbstractFactoryExercito.CriarFactoryExercito(
                         AbstractFactoryExercito.Nacao.India);
+            } else if (sender == BtnAsteca)
+            {
+                factory =
+                    AbstractFactoryExercito.CriarFactoryExercito(
+                        AbstractFactoryExercito.Nacao.Asteca);
             }
-           
+
             TelaDeGuerra tg = new TelaDeGuerra();
             tg.FactoryExercito = factory;
             tg.ShowDialog();

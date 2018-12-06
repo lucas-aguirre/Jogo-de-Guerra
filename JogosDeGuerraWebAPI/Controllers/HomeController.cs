@@ -1,63 +1,47 @@
-﻿using System;
+﻿using JogosDeGuerraModel;
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Principal;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.Security;
 
 namespace JogosDeGuerraWebAPI.Controllers
 {
     public class HomeController : Controller
     {
+        public JogosDeGuerraModel.ModelJogosDeGuerra ctx { get; set; } = new JogosDeGuerraModel.ModelJogosDeGuerra();
+
         public ActionResult Index()
         {
-            ViewBag.Title = "Home Page";
-            bool usuarioAutenticado = 
-                Utils.Utils.ObterUsuarioLogado(
-                    new JogosDeGuerraModel.ModelJogosDeGuerra()
-                    ) != null;
+            ViewBag.Title = "Página Inicial";
+            ViewBag.Usuarios = ctx.Usuarios.Count();
 
-            if (!usuarioAutenticado)
-            {
-                return RedirectToAction("Login");
-            }
+            var batalhas = ctx.Batalhas.ToList();
 
-            return View();
+            return View(batalhas);
         }
 
-        public ActionResult Tabuleiro()
+        public ActionResult Login()
         {
-            ViewBag.Title = "Tabuleiro";
-
-            return View();
-        }
-
-        public ActionResult Login(string usuario, string password, string rememberme, string returnurl)
-        {
-            /*
             ViewBag.Title = "Login";
-            var user = busUser.ValidateUserAndLoad(email, password);
-            if (user == null)
-            {
-                ErrorDisplay.ShowError(busUser.ErrorMessage);
-                return View(ViewModel);
-            }
-
-            AppUserState appUserState = new AppUserState()
-            {
-                Email = user.Email,
-                Name = user.Name,
-                UserId = user.Id,
-                Theme = user.Theme,
-                IsAdmin = user.IsAdmin
-            };
-            IdentitySignin(appUserState, user.OpenId, rememberMe);
-
-            if (!string.IsNullOrEmpty(returnUrl))
-                return Redirect(returnUrl);
-
-            return RedirectToAction("New", "Snippet", null);
-            */
             return View();
+        }
+
+        public ActionResult Cadastro()
+        {
+            ViewBag.Title = "Cadastro";
+            return View();
+        }
+
+
+        public ActionResult Deslogar()
+        {
+            Utils.Utils u = new Utils.Utils(); 
+            u.DeslogarUsuario(Request.GetOwinContext());
+            //Request.GetOwinContext().Authentication.SignOut();
+            return RedirectToAction("Index");
         }
 
     }

@@ -1,84 +1,71 @@
-﻿
-@{
-    ViewBag.Title = "Login";
-}
-<div class="container centered">
+﻿<div class="container centered">
     <div class="row">
-        <div class="col-sm-9 col-md-7 col-lg-5 mx-auto">
+        <div class="col-sm-9 col-md-7 col-lg-5 mx-auto login-form">
             <div class="card card-signin my-5">
-                <div class="card-body">
-                    <h5 class="card-title text-center">Sign In</h5>
+                <div class="card-body form-visual">
+                    <h5 class="h5-red card-title text-center">Entrar</h5>
                     <form>
-                        <div style="border:1px solid red">
+                        <div>
                             @ViewBag.Message
                         </div>
-                        <div class="form-label-group">
-                            <input type="email" id="loginEmail" class="form-control" placeholder="Email address" required autofocus>
-                            <label for="loginEmail" style="text-align:left">Email address</label>
-
+                        <div class="form-group">
+                            <label class="label-red" for="email">Endereço de e-mail</label>
+                            <input type="email" name="email" class="form-control" id="loginEmail" placeholder="Seu e-mail" required autofocus>
                         </div>
-                        <div class="form-label-group">
-                            <input type="password" id="loginPassword" class="form-control" placeholder="Password" required>
-                            <label for="loginPassword" style="text-align:left">Password</label>
-                        </div>                       
-                        <div>
-                            <button onclick="login()" class="btn btn-lg btn-primary btn-block text-uppercase" type="button">Sign in</button>
-                            <button onclick="logout()" class="btn btn-default">Log Out</button>
+                        <div class="form-group">
+                            <label class="label-red" for="password">Senha</label>
+                            <div class="form-inline">
+                                <input type="password" name="password" class="field-password form-control" id="loginPassword" placeholder="Sua senha" required>
+                                <button onclick="login()" class="btn btn-outline-success text-uppercase btn-login" type="button">Login</button>
+                            </div>
                         </div>
                     </form>
-                    
                 </div>
             </div>
         </div>
     </div>
 </div>
 @Styles.Render("~/Content/Login.css")
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.0/jquery-confirm.min.css">
 @section MeusScripts{
-<script type="text/javascript">
-    function showError(jqXHR) {
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.0/jquery-confirm.min.js"></script>
+    <script src="~/Scripts/General.js"></script>
 
-        alert("Olá Erro!");
-        var response = jqXHR.responseJSON;
-        if (response) {
-            if (response.Message) self.errors.push(response.Message);
-            if (response.ModelState) {
-                var modelState = response.ModelState;
-                for (var prop in modelState) {
-                    if (modelState.hasOwnProperty(prop)) {
-                        var msgArr = modelState[prop]; // expect array here
-                        if (msgArr.length) {
-                            for (var i = 0; i < msgArr.length; ++i) self.errors.push(msgArr[i]);
-                        }
-                    }
-                }
+    <script type="text/javascript">
+
+        $(document).keypress(function (e) {
+            if (e.which == 13) {
+                $(".btn-login").trigger('click');
             }
-            if (response.error) self.errors.push(response.error);
-            if (response.error_description) self.errors.push(response.error_description);
-        }
-    }
+        });
 
-    
-    function login() {
-        var baseUrl =
-            window.location.protocol +
-            "//" +
-            window.location.hostname +
-            (window.location.port ? ':' + window.location.port : '');
-        var loginData = {
-            grant_type: 'password',
-            username: document.getElementById("loginEmail").value,
-            password: document.getElementById("loginPassword").value
-        };
-        $.ajax({
-            type: 'POST',
-            url: baseUrl +'/Token',
-            data: loginData
-        }).done(function (data) {
-            alert("Ola! Certo");
-            // Cache the access token in session storage.
-            sessionStorage.setItem('accessToken', data.token_type + " " + data.access_token);
-            sessionStorage.setItem('emailUsuario', data.userName);
-        }).fail(showError);
-    }
-</script>
+        function login() {
+            var loginData = {
+                grant_type: 'password',
+                username: $("#loginEmail").val(),
+                password: $("#loginPassword").val(),
+            };
+
+            if (!loginData.username || !loginData.password) {
+                $.alert({
+                    title: 'Oops...',
+                    content: 'Favor preencher todos os campos',
+                    theme: 'modern',
+                });
+                return false;
+            }
+
+            $.ajax({
+                type: 'POST',
+                url: baseUrl + '/Token',
+                data: loginData
+            }).success(function (data) {
+                sessionStorage.setItem('accessToken', data.token_type + " " + data.access_token);
+                sessionStorage.setItem('emailUsuario', data.userName);
+
+                window.location.href = baseUrl + "/BatalhasMVC/Index";
+            }).fail(showError);
+        }
+    </script>
 }
