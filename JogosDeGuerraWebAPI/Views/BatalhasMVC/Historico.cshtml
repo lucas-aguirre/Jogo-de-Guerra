@@ -7,6 +7,55 @@
 
 <h1 class="text-center text-white">@ViewBag.Title</h1>
 <div class="container">
+    <div class="row" style="margin-top: 60px;">
+        <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
+            <div class="card-deck">
+                <div class="card bg-light border-card">
+                    <div class="card-body text-center home-card">
+                        <h4>Total de Partidas</h4>
+                        <p class="card-text home-counter">@Model.Where(x => x.ExercitoBranco.UsuarioId.Equals(ViewBag.UsuarioId) || x.ExercitoPreto.UsuarioId.Equals(ViewBag.UsuarioId)).Count()</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
+            <div class="card-deck">
+                <div class="card bg-light border-card">
+                    <div class="card-body text-center home-card">
+                        <h4>Total de Vitórias</h4>
+                        <p class="card-text home-counter">@Model.Where(x => x.VencedorId.Equals(ViewBag.UsuarioId)).Count()</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
+            <div class="card-deck">
+                <div class="card bg-light border-card">
+                    <div class="card-body text-center home-card">
+                        <h4>Total de Derrotas</h4>
+                        @{
+                            int derrotas = @Model.Where(x => x.ExercitoBranco.UsuarioId.Equals(ViewBag.UsuarioId) || x.ExercitoPreto.UsuarioId.Equals(ViewBag.UsuarioId)).Where(x => x.Estado.Equals(JogosDeGuerraModel.Batalha.EstadoBatalhaEnum.Finalizado)).Count() - @Model.Where(x => x.VencedorId.Equals(ViewBag.UsuarioId)).Count();
+                        }
+                        <p class="card-text home-counter">
+                            @derrotas
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
+            <div class="card-deck">
+                <div class="card bg-light border-card">
+                    <div class="card-body text-center home-card">
+                        <h4>Não Finalizadas</h4>
+                        <p class="card-text home-counter">@Model.Where(x => x.ExercitoBranco.UsuarioId.Equals(ViewBag.UsuarioId) || x.ExercitoPreto.UsuarioId.Equals(ViewBag.UsuarioId)).Where(x => x.Estado.Equals(JogosDeGuerraModel.Batalha.EstadoBatalhaEnum.Iniciado)).Count()</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="container">
     <div class="row page-content">
 
         <table style="color:#fff" class="table">

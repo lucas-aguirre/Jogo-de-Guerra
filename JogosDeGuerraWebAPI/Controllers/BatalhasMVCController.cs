@@ -177,6 +177,7 @@ namespace JogosDeGuerraWebAPI.Controllers
         public ActionResult Historico()
         {
             var usuarioLogado = Utils.Utils.ObterUsuarioLogado(db);
+            ViewBag.UsuarioId = usuarioLogado.Id;
 
             var batalhas = db.Batalhas
                 .Include(b => b.ExercitoBranco)
